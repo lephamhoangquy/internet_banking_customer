@@ -9,10 +9,12 @@ export const loginEmployee = (email, password) => {
   return async (dispatch) => {
     try {
       const ret = await trackPromise(service.login(email, password));
+      console.log('ret: ', ret);
       if (ret.status === 200) {
-        const { accessToken, refreshToken } = ret.data;
+        const { accessToken, refreshToken, user } = ret.data;
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('account_number', user.account_number);
         dispatch(loginEmployeeSuccess());
         window.location.href = '/';
       }

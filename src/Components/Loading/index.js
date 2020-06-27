@@ -15,6 +15,8 @@ export const LoadingIndicator = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          position: 'fixed',
+          top: '50%',
         }}
       >
         <Loader type="ThreeDots" color="#3f51b5" height="100" width="100" />

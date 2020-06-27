@@ -20,6 +20,7 @@ const App = () => {
           exact
         /> */}
         <LoginRoute path="/login" component={Login} exact />
+        <Route path="/" component={Dashboard} />
         {/* <PrivateRoute path="/dashboard" exact={false} component={Dashboard} /> */}
         <Route path="*">
           <NoMatch />

@@ -1,12 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import PropTypes from 'prop-types';
-import { PrivateRoute } from '../../Components/PrivateRoute';
-import NavBar from '../../Components/Dashboard/NavBar';
-import Sidebar from '../../Components/Dashboard/SideBar';
-import Resource from '../Resource';
+// import { PrivateRoute } from '../../Components/PrivateRoute';
+// import NavBar from '../../Components/Dashboard/NavBar';
+// import Sidebar from '../../Components/Dashboard/SideBar';
+// import Resource from '../Resource';
 import './styles.scss';
+import socketIOClient from 'socket.io-client';
+import Debit from './Debit';
+import { debit } from '../../Services';
+
+const ENDPOINT = 'http://localhost:5000';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,46 +30,57 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = (props) => {
-  const { match } = props;
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+const Dashboard = ({}) => {
+  const handleSubmit = (values) => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on('FromAPI', (data) => {
+      // setResponse(data);
+    });
+    console.log('socket: ', socket);
+    debit();
+    // console.log(values);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // const { match } = props;
+  // const classes = useStyles();
+  // const [open, setOpen] = React.useState(true);
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
 
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    window.location.href = '/login';
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   window.location.href = '/login';
+  // };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <NavBar
-        logout={handleLogout}
-        handleDrawerOpen={handleDrawerOpen}
-        open={open}
-      />
-      <Sidebar
-        handleDrawerClose={handleDrawerClose}
-        open={open}
-        match={match}
-      />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <PrivateRoute path={`${match.path}/:sidebarID`} component={Resource} />
-      </main>
+    // <div className={classes.root}>
+    //   <CssBaseline />
+    //   <NavBar
+    //     logout={handleLogout}
+    //     handleDrawerOpen={handleDrawerOpen}
+    //     open={open}
+    //   />
+    //   <Sidebar
+    //     handleDrawerClose={handleDrawerClose}
+    //     open={open}
+    //     match={match}
+    //   />
+    //   <main className={classes.content}>
+    //     <div className={classes.toolbar} />
+    //     <PrivateRoute path={`${match.path}/:sidebarID`} component={Resource} />
+    //   </main>
+    // </div>
+    <div>
+      <Debit onSubmit={handleSubmit} />
     </div>
   );
 };
 
 Dashboard.propTypes = {
-  match: PropTypes.instanceOf(Object).isRequired,
+  // match: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default Dashboard;
