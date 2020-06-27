@@ -7,11 +7,8 @@ import PropTypes from 'prop-types';
 // import Sidebar from '../../Components/Dashboard/SideBar';
 // import Resource from '../Resource';
 import './styles.scss';
-import socketIOClient from 'socket.io-client';
 import Debit from './Debit';
 import { debit } from '../../Services';
-
-const ENDPOINT = 'http://localhost:5000';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,13 +28,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = ({}) => {
-  const handleSubmit = (values) => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on('FromAPI', (data) => {
-      // setResponse(data);
-    });
-    console.log('socket: ', socket);
-    debit();
+  const handleSubmit = async (values) => {
+    const data = await debit();
+    console.log('data: ', data);
     // console.log(values);
   };
   // const { match } = props;

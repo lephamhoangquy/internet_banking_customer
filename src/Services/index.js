@@ -7,7 +7,7 @@ export const login = (email, password) =>
 
 export const debit = () =>
   callApi(urlApi, `customer/debit`, 'POST', authHeader(), {
-    reminder_id: 14,
+    reminder_id: 8,
     amount: 100000,
     message: 'test',
   });
