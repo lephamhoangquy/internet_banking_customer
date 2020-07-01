@@ -26,13 +26,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Topbar = (props) => {
-  const [respone, setRespone] = useState('');
+  const [notifications, setNoti] = useState([]);
 
   const { className, onSidebarOpen, ...rest } = props;
 
   const classes = useStyles();
-
-  const [notifications] = useState(['1', '2']);
 
   const handleSignOut = () => {
     localStorage.clear();
@@ -41,12 +39,11 @@ const Topbar = (props) => {
 
   useEffect(() => {
     socket.on('debitNoti', (res) => {
-      console.log('Topbar -> res', res);
-      setRespone(res);
+      const tempArr = [];
+      tempArr.push(res);
+      setNoti(tempArr);
     });
   }, []);
-
-  console.log('respone: ', respone);
 
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
@@ -61,11 +58,7 @@ const Topbar = (props) => {
         <div className={classes.flexGrow} />
         <Hidden mdDown>
           <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
+            <Badge badgeContent={notifications.length} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>

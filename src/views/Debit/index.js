@@ -32,7 +32,6 @@ const Charge = ({ findCustomerDebit, customer, createNewDebit, classes }) => {
   };
 
   const onCreate = (values) => {
-    console.log('onCreate -> values', values);
     const { id } = customer;
     const { amount, message } = values;
     if (id) {
