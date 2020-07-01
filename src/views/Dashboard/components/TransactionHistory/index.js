@@ -100,7 +100,7 @@ const TransactionHistory = ({
                   key={tran.id}
                   index={index + 1}
                   transaction={tran}
-                  accNumber={account_number}
+                  user={user}
                 />
               ))}
           </TransacionList>

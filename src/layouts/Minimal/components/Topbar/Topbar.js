@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -26,7 +27,10 @@ const Topbar = (props) => {
     >
       <Toolbar>
         <RouterLink to="/">
-          <img alt="Logo" src="/images/logos/logo--white.svg" />
+          <img
+            alt="Logo"
+            src="https://www.icicibank.com/managed-assets/images/offer-zone/brand-logos/internet-banking.png"
+          />
         </RouterLink>
       </Toolbar>
     </AppBar>

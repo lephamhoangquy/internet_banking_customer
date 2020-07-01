@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   signOutButton: {
     marginLeft: theme.spacing(1),
   },
+  logo: {
+    width: '45%',
+  },
 }));
 
 const Topbar = (props) => {
@@ -37,7 +40,11 @@ const Topbar = (props) => {
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
         <RouterLink to="/">
-          <img alt="Logo" src="/images/logos/logo--white.svg" />
+          <img
+            className={classes.logo}
+            alt="Logo"
+            src="https://www.icicibank.com/managed-assets/images/offer-zone/brand-logos/internet-banking.png"
+          />
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>

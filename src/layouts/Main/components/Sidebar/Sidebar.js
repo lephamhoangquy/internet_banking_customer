@@ -4,16 +4,10 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import SettingsIcon from '@material-ui/icons/Settings';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-
-import { Profile, SidebarNav, UpgradePlan } from './components';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -45,44 +39,19 @@ const Sidebar = (props) => {
 
   const pages = [
     {
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />,
-    },
-    {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />,
-    },
-    {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />,
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />,
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />,
-    },
-    {
-      title: 'Account',
-      href: '/account',
+      title: 'Thông tin tài khoản',
+      href: '/info',
       icon: <AccountBoxIcon />,
     },
     {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />,
+      title: 'Quản lí nợ',
+      href: '/debit',
+      icon: <MonetizationOnIcon />,
+    },
+    {
+      title: 'Cập nhật mật khẩu',
+      href: '/update-password',
+      icon: <VpnKeyIcon />,
     },
   ];
 
@@ -98,7 +67,6 @@ const Sidebar = (props) => {
         <Profile />
         <Divider className={classes.divider} />
         <SidebarNav className={classes.nav} pages={pages} />
-        <UpgradePlan />
       </div>
     </Drawer>
   );

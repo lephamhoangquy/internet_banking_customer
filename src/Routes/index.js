@@ -7,17 +7,32 @@ import { LoginRoute } from '../Components/PrivateRoute';
 import Dashboard from '../views/Dashboard';
 import NotFound from '../views/NotFound';
 import Login from '../Containers/Login';
+import UpdatePassword from '../views/UpdatePassword';
+import Debit from '../views/Debit';
 
 const Routes = () => {
   return (
     <Switch>
-      <Redirect exact from="/" to="/dashboard" />
+      <Redirect exact from="/" to="/info" />
       <LoginRoute path="/login" component={Login} exact />
       <RouteWithLayout
         component={Dashboard}
         exact
         layout={MainLayout}
-        path="/dashboard"
+        path="/info"
+      />
+      <LoginRoute path="/login" component={Login} exact />
+      <RouteWithLayout
+        component={UpdatePassword}
+        exact
+        layout={MainLayout}
+        path="/update-password"
+      />
+      <RouteWithLayout
+        component={Debit}
+        exact
+        layout={MainLayout}
+        path="/debit"
       />
       <RouteWithLayout
         component={NotFound}

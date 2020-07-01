@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { urlApi } from '../Config';
 import callApi from '../Utils/apiCaller';
 import authHeader from '../Helpers/AuthHeader';
@@ -29,3 +30,15 @@ export const getTransactionLog = (
     null,
   );
 };
+
+export const findCustomer = (account_number) =>
+  callApi(urlApi, `debit/verify-contact`, 'POST', authHeader(), {
+    account_number,
+  });
+
+export const createDebit = (id, amount, message) =>
+  callApi(urlApi, 'debit', 'POST', authHeader(), {
+    reminder_id: id,
+    amount,
+    message,
+  });

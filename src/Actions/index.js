@@ -16,7 +16,7 @@ export const loginEmployee = (email, password) => {
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('user', JSON.stringify(_.omit(user, 'password')));
         dispatch(loginEmployeeSuccess());
-        window.location.href = '/dashboard';
+        window.location.href = '/info';
       }
     } catch (error) {
       dispatch(loginEmployeeFailed());
@@ -78,4 +78,35 @@ export const fetchTransaction = (
       type: constant.GET_TRANSACTION_FAILED,
     };
   }
+};
+
+export const findCustomer = (accNumber) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.findCustomer(accNumber));
+      if (res.status === 200) {
+        dispatch(success(res.data.customer));
+      }
+    } catch (error) {
+      alert('Không tìm thấy số tài khoản');
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.FIND_CUSTOMER,
+      payload: data,
+    };
+  }
+};
+
+export const createDebit = (id, amount, message) => {
+  return async (dispatch) => {
+    try {
+      const res = await service.createDebit(id, amount, message);
+      console.log('createDebit -> res', res);
+    } catch (error) {
+      throw error;
+    }
+  };
 };
