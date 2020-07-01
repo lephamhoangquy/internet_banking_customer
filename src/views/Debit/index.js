@@ -40,11 +40,11 @@ const Charge = ({ findCustomer, customer, createNewDebit, classes }) => {
   const onCreate = (values) => {
     console.log('onCreate -> values', values);
     const { id } = customer;
-    const { amount } = values;
+    const { amount, message } = values;
     if (id) {
       const socket = socketIOClient(ENDPOINT);
       socket.emit('init', token);
-      createNewDebit(id, accNumber, amount);
+      createNewDebit(id, amount, message);
       setOpenCharge(false);
     }
   };

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Charge from './formCharge';
-import { formatter } from '../../Helpers/ToCurrency';
 
 const styles = {
   content: {

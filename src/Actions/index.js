@@ -101,10 +101,12 @@ export const findCustomer = (accNumber) => {
 };
 
 export const createDebit = (id, amount, message) => {
-  return async (dispatch) => {
+  return async () => {
     try {
-      const res = await service.createDebit(id, amount, message);
-      console.log('createDebit -> res', res);
+      const res = await trackPromise(service.createDebit(id, amount, message));
+      if (res.status === 200 && res.data.message === 'Success') {
+        alert('Nhắc nợ thành công');
+      }
     } catch (error) {
       throw error;
     }
