@@ -7,9 +7,12 @@ import PropTypes from 'prop-types';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
+import socketIOClient from 'socket.io-client';
 import Search from './formSearch';
 import InfoCustomer from './infoCustomer';
 import { findCustomer, createDebit } from '../../Actions';
+
+const ENDPOINT = 'http://localhost:5000';
 
 const styles = {
   title: {
@@ -26,6 +29,8 @@ const Charge = ({ findCustomer, customer, createNewDebit, classes }) => {
   const [isOpenCharge, setOpenCharge] = useState(false);
   const [accNumber, setAccNumber] = useState(null);
 
+  const token = localStorage.getItem('accessToken');
+
   const onSearch = (values) => {
     const { account_number } = values;
     findCustomer(account_number);
@@ -37,6 +42,8 @@ const Charge = ({ findCustomer, customer, createNewDebit, classes }) => {
     const { id } = customer;
     const { amount } = values;
     if (id) {
+      const socket = socketIOClient(ENDPOINT);
+      socket.emit('init', token);
       createNewDebit(id, accNumber, amount);
       setOpenCharge(false);
     }
