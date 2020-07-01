@@ -7,12 +7,9 @@ import PropTypes from 'prop-types';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
-import socketIOClient from 'socket.io-client';
 import Search from './formSearch';
 import InfoCustomer from './infoCustomer';
 import { findCustomer, createDebit } from '../../Actions';
-
-const ENDPOINT = 'http://localhost:5000';
 
 const styles = {
   title: {
@@ -24,16 +21,13 @@ const styles = {
   },
 };
 
-const Charge = ({ findCustomer, customer, createNewDebit, classes }) => {
-  console.log('Charge -> customer', customer);
+const Charge = ({ findCustomerDebit, customer, createNewDebit, classes }) => {
   const [isOpenCharge, setOpenCharge] = useState(false);
   const [accNumber, setAccNumber] = useState(null);
 
-  const token = localStorage.getItem('accessToken');
-
   const onSearch = (values) => {
     const { account_number } = values;
-    findCustomer(account_number);
+    findCustomerDebit(account_number);
     setAccNumber(account_number);
   };
 
@@ -42,8 +36,6 @@ const Charge = ({ findCustomer, customer, createNewDebit, classes }) => {
     const { id } = customer;
     const { amount, message } = values;
     if (id) {
-      const socket = socketIOClient(ENDPOINT);
-      socket.emit('init', token);
       createNewDebit(id, amount, message);
       setOpenCharge(false);
     }
@@ -74,7 +66,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    findCustomer: (accNumber) => {
+    findCustomerDebit: (accNumber) => {
       dispatch(findCustomer(accNumber));
     },
     createNewDebit: (id, amount, message) => {
@@ -84,7 +76,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Charge.propTypes = {
-  findCustomer: PropTypes.func,
+  findCustomerDebit: PropTypes.func,
   customer: PropTypes.instanceOf(Object),
   createNewDebit: PropTypes.func,
   classes: PropTypes.instanceOf(Object),

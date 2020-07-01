@@ -2,22 +2,18 @@ import React, { useEffect } from 'react';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ThemeProvider } from '@material-ui/styles';
-import socketIOClient from 'socket.io-client';
 import theme from './theme';
 import Routes from './Routes';
-
-const ENDPOINT = 'http://localhost:5000';
+import { socket } from './socket';
 
 const browserHistory = createBrowserHistory();
 
 const App = () => {
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on('debitNoti', (data) => {
-      console.log('App -> data', data);
-    });
-  }, []);
+  const token = localStorage.getItem('accessToken');
 
+  useEffect(() => {
+    socket.emit('init', token);
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Router history={browserHistory}>

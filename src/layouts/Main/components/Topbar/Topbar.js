@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { socket } from '../../../../socket';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,16 +26,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Topbar = (props) => {
+  const [respone, setRespone] = useState('');
+
   const { className, onSidebarOpen, ...rest } = props;
 
   const classes = useStyles();
 
-  const [notifications] = useState([]);
+  const [notifications] = useState(['1', '2']);
 
   const handleSignOut = () => {
     localStorage.clear();
     window.location.href = '/login';
   };
+
+  useEffect(() => {
+    socket.on('debitNoti', (res) => {
+      console.log('Topbar -> res', res);
+      setRespone(res);
+    });
+  }, []);
+
+  console.log('respone: ', respone);
 
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
