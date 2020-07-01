@@ -5,16 +5,27 @@ import authHeader from '../Helpers/AuthHeader';
 export const login = (email, password) =>
   callApi(urlApi, `auth/customer/login`, 'POST', null, { email, password });
 
-export const addCustomer = (body) =>
-  callApi(urlApi, `employee/create-customer`, 'POST', authHeader(), body);
-
-export const findCustomerByAccNum = (accNumber) =>
-  callApi(urlApi, 'employee/verify-customer', 'POST', authHeader(), {
-    account_number: accNumber,
-  });
-
-export const chargeMoney = (accNumber, amount) =>
-  callApi(urlApi, 'employee/payin', 'POST', authHeader(), {
-    account_number: accNumber,
-    amount,
-  });
+export const getTransactionLog = (
+  accNumber,
+  page,
+  isReceiver,
+  isSender,
+  isRemind,
+  isBeRemind,
+) => {
+  const query = {
+    isReceiver,
+    isSender,
+    isRemind,
+    isBeRemind,
+  };
+  return callApi(
+    urlApi,
+    `employee/history/${accNumber}?q=${JSON.stringify(
+      query,
+    )}&page=${page}&per_page=10`,
+    'GET',
+    authHeader(),
+    null,
+  );
+};

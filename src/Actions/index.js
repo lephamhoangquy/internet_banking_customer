@@ -34,3 +34,48 @@ export const loginEmployee = (email, password) => {
     };
   }
 };
+
+export const fetchTransaction = (
+  accNumber,
+  page,
+  isReceiver,
+  isSender,
+  isRemind,
+  isBeRemind,
+) => {
+  return async (dispatch) => {
+    try {
+      const transactions = await trackPromise(
+        service.getTransactionLog(
+          accNumber,
+          page,
+          isReceiver,
+          isSender,
+          isRemind,
+          isBeRemind,
+        ),
+      );
+      if (transactions.status === 200) {
+        dispatch(fetchTransactionSuccess(transactions.data));
+      } else {
+        alert('Không tìm thấy.');
+        dispatch(fetchTransactionFailed());
+      }
+    } catch (error) {
+      alert('Không tìm thấy.');
+      dispatch(fetchTransactionFailed());
+      throw error;
+    }
+  };
+  function fetchTransactionSuccess(data) {
+    return {
+      type: constant.GET_TRANSACTION_SUCCESS,
+      payload: data,
+    };
+  }
+  function fetchTransactionFailed() {
+    return {
+      type: constant.GET_TRANSACTION_FAILED,
+    };
+  }
+};
