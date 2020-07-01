@@ -1,9 +1,11 @@
+/* eslint-disable no-param-reassign */
 import { LOGIN_SUCCESS, LOGIN_FAILED } from '../Constants';
 
 const user = (state = {}, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return { isLogin: true };
+      state = { ...action.payload, isLogin: true };
+      return { ...state };
     case LOGIN_FAILED:
       return { isLogin: false };
     default:

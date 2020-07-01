@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-useless-catch */
 import { trackPromise } from 'react-promise-tracker';
+import _ from 'lodash';
 import * as constant from '../Constants';
 import * as service from '../Services';
 
@@ -10,11 +11,12 @@ export const loginEmployee = (email, password) => {
     try {
       const ret = await trackPromise(service.login(email, password));
       if (ret.status === 200) {
-        const { accessToken, refreshToken } = ret.data;
+        const { accessToken, refreshToken, user } = ret.data;
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('user', JSON.stringify(_.omit(user, 'password')));
         dispatch(loginEmployeeSuccess());
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       }
     } catch (error) {
       dispatch(loginEmployeeFailed());
