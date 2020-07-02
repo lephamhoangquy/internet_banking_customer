@@ -42,3 +42,12 @@ export const createDebit = (id, amount, message) =>
     amount,
     message,
   });
+
+export const createContact = (reminder_name, account_number) =>
+  callApi(urlApi, `customer/create-contact`, 'PUT', authHeader(), {
+    reminder_name,
+    account_number,
+  });
+
+export const getContactList = () =>
+  callApi(urlApi, `customer/list-contacts`, 'GET', authHeader(), null);

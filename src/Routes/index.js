@@ -9,6 +9,8 @@ import NotFound from '../views/NotFound';
 import Login from '../Containers/Login';
 import UpdatePassword from '../views/UpdatePassword';
 import Debit from '../views/Debit';
+import Contact from '../views/Contact';
+import CreateContact from '../views/Contact/CreateContact';
 
 const Routes = () => {
   return (
@@ -33,6 +35,18 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/debit"
+      />
+      <RouteWithLayout
+        component={Contact}
+        exact
+        layout={MainLayout}
+        path="/contact"
+      />
+      <RouteWithLayout
+        component={CreateContact}
+        exact
+        layout={MainLayout}
+        path="/create-contact"
       />
       <RouteWithLayout
         component={NotFound}

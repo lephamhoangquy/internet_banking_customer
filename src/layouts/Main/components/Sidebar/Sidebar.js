@@ -7,6 +7,7 @@ import { Divider, Drawer } from '@material-ui/core';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import ContactsIcon from '@material-ui/icons/Contacts';
 import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +48,11 @@ const Sidebar = (props) => {
       title: 'Quản lí nợ',
       href: '/debit',
       icon: <MonetizationOnIcon />,
+    },
+    {
+      title: 'Danh sách người nhận',
+      href: '/contact',
+      icon: <ContactsIcon />,
     },
     {
       title: 'Cập nhật mật khẩu',

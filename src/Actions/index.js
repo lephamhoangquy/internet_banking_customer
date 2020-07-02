@@ -112,3 +112,45 @@ export const createDebit = (id, amount, message) => {
     }
   };
 };
+
+export const createContact = (reminderName, accountNumber) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(
+        service.createContact(reminderName, accountNumber),
+      );
+      if (res.status === 200) {
+        dispatch(success([res.data.contact]));
+        alert('Thêm thành công');
+      }
+    } catch (error) {
+      alert('Xảy ra lỗi');
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.CREATE_CONTACT,
+      payload: data,
+    };
+  }
+};
+
+export const getContactList = () => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.getContactList());
+      if (res.status === 200) {
+        dispatch(success(res.data.contacts.list_contact));
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.GET_CONTACT_LIST,
+      payload: data,
+    };
+  }
+};
