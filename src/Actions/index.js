@@ -6,7 +6,7 @@ import _ from 'lodash';
 import * as constant from '../Constants';
 import * as service from '../Services';
 
-export const loginEmployee = (email, password) => {
+export const loginEmployee = (email, password, ownProps) => {
   return async (dispatch) => {
     try {
       const ret = await trackPromise(service.login(email, password));
@@ -15,17 +15,18 @@ export const loginEmployee = (email, password) => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('user', JSON.stringify(_.omit(user, 'password')));
-        dispatch(loginEmployeeSuccess());
-        window.location.href = '/info';
+        dispatch(loginEmployeeSuccess(ret.data.user));
+        ownProps.history.push('/info');
       }
     } catch (error) {
       dispatch(loginEmployeeFailed());
       throw error;
     }
   };
-  function loginEmployeeSuccess() {
+  function loginEmployeeSuccess(data) {
     return {
       type: constant.LOGIN_SUCCESS,
+      payload: data,
     };
   }
   function loginEmployeeFailed() {

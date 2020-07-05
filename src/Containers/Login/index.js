@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import LoginForm from '../../Components/LoginForm';
 import { loginEmployee } from '../../Actions';
 
@@ -20,10 +21,10 @@ const mapStateToProp = (state) => ({
   user: state.user,
 });
 
-const mapDispatchToProp = (dispatch) => {
+const mapDispatchToProp = (dispatch, ownProps) => {
   return {
     login: (email, password) => {
-      dispatch(loginEmployee(email, password));
+      dispatch(loginEmployee(email, password, ownProps));
     },
   };
 };
@@ -33,4 +34,4 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProp, mapDispatchToProp)(Login);
+export default withRouter(connect(mapStateToProp, mapDispatchToProp)(Login));
