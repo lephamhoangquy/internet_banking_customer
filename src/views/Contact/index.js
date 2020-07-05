@@ -10,7 +10,11 @@ import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { getContactList, setEditContactForm } from '../../Actions';
+import {
+  getContactList,
+  setEditContactForm,
+  deleteContact,
+} from '../../Actions';
 import HeadList from './HeadTable';
 import ContactList from '../../Components/Dashboard/TableBody';
 import ContactItem from './ContactItem';
@@ -33,7 +37,7 @@ const styles = {
   },
 };
 
-const Contact = ({ classes, getContact, contact, setEdit }) => {
+const Contact = ({ classes, getContact, contact, setEdit, removeContact }) => {
   useEffect(() => {
     getContact();
   }, []);
@@ -62,6 +66,7 @@ const Contact = ({ classes, getContact, contact, setEdit }) => {
                   key={index}
                   index={index + 1}
                   contact={elem}
+                  removeContact={removeContact}
                 />
               ))}
           </ContactList>
@@ -83,6 +88,9 @@ const mapDispatchToProps = (dispatch) => {
     setEdit: (reminder, accNumber) => {
       dispatch(setEditContactForm(reminder, accNumber));
     },
+    removeContact: (accNumber) => {
+      dispatch(deleteContact(accNumber));
+    },
   };
 };
 
@@ -91,6 +99,7 @@ Contact.propTypes = {
   contact: PropTypes.instanceOf(Array).isRequired,
   getContact: PropTypes.func.isRequired,
   setEdit: PropTypes.func.isRequired,
+  removeContact: PropTypes.func.isRequired,
 };
 
 export default compose(

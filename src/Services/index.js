@@ -51,3 +51,12 @@ export const createContact = (reminder_name, account_number) =>
 
 export const getContactList = () =>
   callApi(urlApi, `customer/list-contacts`, 'GET', authHeader(), null);
+
+export const deleteContact = (accNumber) =>
+  callApi(
+    urlApi,
+    `customer/list-contacts/${accNumber}`,
+    'DELETE',
+    authHeader(),
+    null,
+  );

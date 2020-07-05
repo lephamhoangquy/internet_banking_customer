@@ -169,3 +169,24 @@ export const resetEditContactForm = () => {
     type: constant.RESET_EDIT_CONTACT_FORM,
   };
 };
+
+export const deleteContact = (accNumber) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.deleteContact(accNumber));
+      if (res.status === 200) {
+        dispatch(success(res.data.contact.list_contact));
+        alert('Xóa thành công');
+      }
+    } catch (error) {
+      alert('Xóa không thành công');
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.DELETE_CONTACT,
+      payload: data,
+    };
+  }
+};
