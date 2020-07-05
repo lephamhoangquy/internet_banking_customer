@@ -5,6 +5,7 @@ import transaction from './transaction';
 import customer from './customer';
 import contact from './contact';
 import inputEditContact from './inputEditContact';
+import debit from './debit';
 
 const appReducer = combineReducers({
   form: formReducer,
@@ -13,5 +14,6 @@ const appReducer = combineReducers({
   customer,
   contact,
   inputEditContact,
+  debit,
 });
 export default appReducer;

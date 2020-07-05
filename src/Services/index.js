@@ -60,3 +60,6 @@ export const deleteContact = (accNumber) =>
     authHeader(),
     null,
   );
+
+export const getListDebit = () =>
+  callApi(urlApi, `customer/debits`, 'GET', authHeader(), null);

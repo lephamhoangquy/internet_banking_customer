@@ -190,3 +190,22 @@ export const deleteContact = (accNumber) => {
     };
   }
 };
+
+export const getListDebit = () => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.getListDebit());
+      if (res.status === 200) {
+        dispatch(success(res.data.debits));
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.GET_LIST_DEBIT,
+      payload: data,
+    };
+  }
+};

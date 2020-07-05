@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import TextField from '../../Components/CustomField/TextField';
+import TextField from '../../../Components/CustomField/TextField';
 
 let Charge = ({ open, handleClose, handleSubmit }) => {
   return (

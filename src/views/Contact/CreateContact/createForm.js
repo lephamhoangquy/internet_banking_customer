@@ -8,6 +8,8 @@ import { reduxForm, Field } from 'redux-form';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import _ from 'lodash';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { Link } from 'react-router-dom';
 import TextField from '../../../Components/CustomField/TextField';
 
 const styles = {
@@ -27,12 +29,26 @@ const styles = {
   btn: {
     textAlign: 'center',
   },
+  back: {
+    position: 'absolute',
+    left: 255,
+    '& a': {
+      textDecoration: 'none',
+    },
+  },
 };
 
 let CreateContact = ({ classes, handleSubmit, initialValues }) => {
   return (
     <div>
       <div className={classes.title}>
+        <div className={classes.back}>
+          <Link to="/contact">
+            <Button color="primary">
+              <KeyboardBackspaceIcon />
+            </Button>
+          </Link>
+        </div>
         <GroupAddIcon fontSize="large" />
         {_.isEmpty(initialValues) ? (
           <h2>Thêm mới người nhận</h2>

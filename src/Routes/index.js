@@ -9,6 +9,7 @@ import NotFound from '../views/NotFound';
 import Login from '../Containers/Login';
 import UpdatePassword from '../views/UpdatePassword';
 import Debit from '../views/Debit';
+import CreateDebit from '../views/Debit/CreateDebit';
 import Contact from '../views/Contact';
 import CreateContact from '../views/Contact/CreateContact';
 
@@ -35,6 +36,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/debit"
+      />
+      <RouteWithLayout
+        component={CreateDebit}
+        exact
+        layout={MainLayout}
+        path="/create-debit"
       />
       <RouteWithLayout
         component={Contact}
