@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
+import ReCAPTCHA from 'react-google-recaptcha';
 import TextField from '../CustomField/TextField';
 import CopyRight from '../CopyRight';
 
@@ -46,6 +47,9 @@ let LoginForm = (props) => {
   const classes = useStyles();
   const { handleSubmit, user } = props;
   const isLogin = _.get(user, 'isLogin', null);
+  function onChange(value) {
+    console.log('Captcha value:', value);
+  }
   return (
     <Container component="main" maxWidth="xs">
       {/* Check login failure => alert  */}
@@ -100,6 +104,11 @@ let LoginForm = (props) => {
           >
             Đăng nhập
           </Button>
+          <ReCAPTCHA
+            sitekey="6LePB6cZAAAAAK2Q7aRVXHqaz-zzPrkUrOLJ2JmQ"
+            onChange={onChange}
+          />
+          ,
         </form>
       </div>
       <Box mt={5}>
