@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import _ from 'lodash';
 import TextField from '../../../Components/CustomField/TextField';
 
 const styles = {
@@ -28,12 +29,16 @@ const styles = {
   },
 };
 
-let CreateContact = ({ classes, handleSubmit }) => {
+let CreateContact = ({ classes, handleSubmit, initialValues }) => {
   return (
     <div>
       <div className={classes.title}>
         <GroupAddIcon fontSize="large" />
-        <h2>Thêm mới người nhận</h2>
+        {_.isEmpty(initialValues) ? (
+          <h2>Thêm mới người nhận</h2>
+        ) : (
+          <h2>Cập nhật người nhận</h2>
+        )}
       </div>
       <Paper>
         <form onSubmit={handleSubmit} className={classes.form}>
@@ -58,9 +63,15 @@ let CreateContact = ({ classes, handleSubmit }) => {
             />
           </div>
           <div className={classes.btn}>
-            <Button type="submit" variant="contained" color="primary">
-              Thêm
-            </Button>
+            {_.isEmpty(initialValues) ? (
+              <Button type="submit" variant="contained" color="primary">
+                Thêm
+              </Button>
+            ) : (
+              <Button type="submit" variant="contained" color="primary">
+                Cập nhật
+              </Button>
+            )}
           </div>
         </form>
       </Paper>
@@ -75,6 +86,7 @@ CreateContact = reduxForm({
 CreateContact.propTypes = {
   classes: PropTypes.instanceOf(Object),
   handleSubmit: PropTypes.func,
+  initialValues: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default compose(withStyles(styles))(CreateContact);

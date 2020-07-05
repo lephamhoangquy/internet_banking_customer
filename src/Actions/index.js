@@ -142,6 +142,7 @@ export const getContactList = () => {
       const res = await trackPromise(service.getContactList());
       if (res.status === 200) {
         dispatch(success(res.data.contacts.list_contact));
+        dispatch(resetEditContactForm());
       }
     } catch (error) {
       throw error;
@@ -153,4 +154,18 @@ export const getContactList = () => {
       payload: data,
     };
   }
+};
+
+export const setEditContactForm = (reminderName, accNumber) => {
+  return {
+    type: constant.SET_EDIT_CONTACT_FORM,
+    reminderName,
+    accNumber,
+  };
+};
+
+export const resetEditContactForm = () => {
+  return {
+    type: constant.RESET_EDIT_CONTACT_FORM,
+  };
 };

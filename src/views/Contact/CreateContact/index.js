@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import ContactForm from './createForm';
 import { createContact } from '../../../Actions';
 
-const Contact = ({ createNewContact }) => {
+const Contact = ({ createNewContact, inputEdit }) => {
   const submit = (values) => {
     const { reminderName, accountNumber } = values;
     createNewContact(reminderName, accountNumber);
   };
 
-  return <ContactForm onSubmit={submit} />;
+  return <ContactForm initialValues={inputEdit} onSubmit={submit} />;
 };
+
+const mapStateToProps = (state) => ({
+  inputEdit: state.inputEditContact,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -23,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 
 Contact.propTypes = {
   createNewContact: PropTypes.func.isRequired,
+  inputEdit: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

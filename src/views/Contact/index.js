@@ -10,7 +10,7 @@ import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { getContactList } from '../../Actions';
+import { getContactList, setEditContactForm } from '../../Actions';
 import HeadList from './HeadTable';
 import ContactList from '../../Components/Dashboard/TableBody';
 import ContactItem from './ContactItem';
@@ -33,7 +33,7 @@ const styles = {
   },
 };
 
-const Contact = ({ classes, getContact, contact }) => {
+const Contact = ({ classes, getContact, contact, setEdit }) => {
   useEffect(() => {
     getContact();
   }, []);
@@ -57,7 +57,12 @@ const Contact = ({ classes, getContact, contact }) => {
           <ContactList>
             {Array.isArray(contact) &&
               contact.map((elem, index) => (
-                <ContactItem key={index} index={index + 1} contact={elem} />
+                <ContactItem
+                  setEdit={setEdit}
+                  key={index}
+                  index={index + 1}
+                  contact={elem}
+                />
               ))}
           </ContactList>
         </Table>
@@ -75,6 +80,9 @@ const mapDispatchToProps = (dispatch) => {
     getContact: () => {
       dispatch(getContactList());
     },
+    setEdit: (reminder, accNumber) => {
+      dispatch(setEditContactForm(reminder, accNumber));
+    },
   };
 };
 
@@ -82,6 +90,7 @@ Contact.propTypes = {
   classes: PropTypes.instanceOf(Object).isRequired,
   contact: PropTypes.instanceOf(Array).isRequired,
   getContact: PropTypes.func.isRequired,
+  setEdit: PropTypes.func.isRequired,
 };
 
 export default compose(
