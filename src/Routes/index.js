@@ -12,6 +12,7 @@ import Debit from '../views/Debit';
 import CreateDebit from '../views/Debit/CreateDebit';
 import Contact from '../views/Contact';
 import CreateContact from '../views/Contact/CreateContact';
+import Transaction from '../views/Transaction';
 
 const Routes = () => {
   return (
@@ -54,6 +55,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/create-contact"
+      />
+      <RouteWithLayout
+        component={Transaction}
+        exact
+        layout={MainLayout}
+        path="/transaction"
       />
       <RouteWithLayout
         component={NotFound}

@@ -81,7 +81,7 @@ const InfoCustomer = ({
             color="primary"
             type="button"
           >
-            Nhắc nợ
+            Giao dịch
           </Button>
         </div>
       </Paper>

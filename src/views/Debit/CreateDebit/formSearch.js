@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import TextField from '../../../Components/CustomField/TextField';
+import AutoComplete from '../../../Components/CustomField/AutoComplete';
 
 const styles = {
   form: {
@@ -32,9 +32,9 @@ let searchForm = ({ handleSubmit, classes }) => {
           <div className={classes.field}>
             <Field
               name="account_number"
-              component={TextField}
+              component={AutoComplete}
               required
-              type="number"
+              options={['quy', 'quang']}
               label="Nhập vào số tài khoản"
               fullWidth
             />
