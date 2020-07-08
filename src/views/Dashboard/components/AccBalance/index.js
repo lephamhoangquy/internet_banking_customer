@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import _ from 'lodash';
 import { formatter } from '../../../../Helpers/ToCurrency';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +52,7 @@ const TotalProfit = (props) => {
               Số Dư
             </Typography>
             <Typography color="inherit" variant="h3">
-              {formatter.format(user.account_balance)}
+              {!_.isEmpty(user) && formatter.format(user.account_balance)}
             </Typography>
           </Grid>
           <Grid item>

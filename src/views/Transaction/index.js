@@ -8,7 +8,7 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import Search from '../Debit/CreateDebit/formSearch';
-import InfoCustomer from '../Debit/CreateDebit/infoCustomer';
+import InfoCustomer from './components/infoCustomer';
 import { findCustomer } from '../../Actions';
 
 const styles = {
@@ -22,13 +22,11 @@ const styles = {
 };
 
 const Charge = ({ findCustomerTrans, customer, chargeMoney, classes }) => {
-  console.log('Charge -> customer', customer);
   const [isOpenCharge, setOpenCharge] = useState(false);
   const [accNumber, setAccNumber] = useState(null);
 
   const onSearch = (values) => {
     const { account_number } = values;
-    console.log('onSearch -> account_number', account_number);
     findCustomerTrans(account_number);
     // setAccNumber(account_number);
   };

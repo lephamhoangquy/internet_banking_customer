@@ -63,3 +63,8 @@ export const deleteContact = (accNumber) =>
 
 export const getListDebit = () =>
   callApi(urlApi, `customer/debits`, 'GET', authHeader(), null);
+
+export const getProfile = (account_number) =>
+  callApi(urlApi, `employee/verify-customer`, 'POST', authHeader(), {
+    account_number,
+  });

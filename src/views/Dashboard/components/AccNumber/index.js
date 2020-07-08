@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,9 @@ const Budget = (props) => {
             >
               Số Tài Khoản
             </Typography>
-            <Typography variant="h3">{user.account_number}</Typography>
+            <Typography variant="h3">
+              {!_.isEmpty(user) && user.account_number}
+            </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

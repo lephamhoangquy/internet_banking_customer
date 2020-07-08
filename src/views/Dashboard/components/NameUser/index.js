@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,9 @@ const TotalUsers = (props) => {
             >
               Tên Tài Khoản
             </Typography>
-            <Typography variant="h3">{user.fullname}</Typography>
+            <Typography variant="h3">
+              {!_.isEmpty(user) && user.fullname}
+            </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

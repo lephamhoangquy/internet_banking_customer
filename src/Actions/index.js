@@ -59,11 +59,9 @@ export const fetchTransaction = (
       if (transactions.status === 200) {
         dispatch(fetchTransactionSuccess(transactions.data));
       } else {
-        alert('Không tìm thấy.');
         dispatch(fetchTransactionFailed());
       }
     } catch (error) {
-      alert('Không tìm thấy.');
       dispatch(fetchTransactionFailed());
       throw error;
     }
@@ -206,6 +204,26 @@ export const getListDebit = () => {
   function success(data) {
     return {
       type: constant.GET_LIST_DEBIT,
+      payload: data,
+    };
+  }
+};
+
+export const getProfile = (accNumber) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.getProfile(accNumber));
+      if (res.status === 200) {
+        dispatch(success(res.data.customer));
+      }
+    } catch (error) {
+      alert('Không tìm thấy số tài khoản này. ');
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.GET_PROFILE,
       payload: data,
     };
   }

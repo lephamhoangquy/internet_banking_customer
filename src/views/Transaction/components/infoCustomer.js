@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import Charge from './formCharge';
+import { Link } from 'react-router-dom';
 
 const styles = {
   content: {
@@ -14,6 +14,9 @@ const styles = {
   },
   btnCharge: {
     textAlign: 'center',
+    '& a': {
+      textDecoration: 'none',
+    },
   },
   title: {
     textAlign: 'center',
@@ -41,13 +44,7 @@ const styles = {
   },
 };
 
-const InfoCustomer = ({
-  customer,
-  isOpenCharge,
-  setOpenCharge,
-  onCreate,
-  classes,
-}) => {
+const InfoCustomer = ({ customer, setOpenCharge, classes }) => {
   return (
     <Container>
       <Paper className={classes.content}>
@@ -75,21 +72,18 @@ const InfoCustomer = ({
           </div>
         </div>
         <div className={classes.btnCharge}>
-          <Button
-            onClick={() => setOpenCharge(true)}
-            variant="contained"
-            color="primary"
-            type="button"
-          >
-            Nhắc nợ
-          </Button>
+          <Link to="/transaction/charge">
+            <Button
+              onClick={() => setOpenCharge(true)}
+              variant="contained"
+              color="primary"
+              type="button"
+            >
+              Chuyển tiền
+            </Button>
+          </Link>
         </div>
       </Paper>
-      <Charge
-        onSubmit={onCreate}
-        open={isOpenCharge}
-        handleClose={setOpenCharge}
-      />
     </Container>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
-
 import RouteWithLayout from '../Components/RouteWithLayout';
 import { Main as MainLayout, Minimal as MinimalLayout } from '../layouts';
 import { LoginRoute } from '../Components/PrivateRoute';
@@ -13,6 +12,7 @@ import CreateDebit from '../views/Debit/CreateDebit';
 import Contact from '../views/Contact';
 import CreateContact from '../views/Contact/CreateContact';
 import Transaction from '../views/Transaction';
+import Charge from '../views/Transaction/Charge';
 
 const Routes = () => {
   return (
@@ -61,6 +61,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/transaction"
+      />
+      <RouteWithLayout
+        component={Charge}
+        exact
+        layout={MainLayout}
+        path="/transaction/charge"
       />
       <RouteWithLayout
         component={NotFound}

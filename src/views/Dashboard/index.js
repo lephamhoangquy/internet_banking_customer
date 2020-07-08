@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import AccNumber from './components/AccNumber';
 import NameUser from './components/NameUser';
 import Contact from './components/Contact';
@@ -13,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
   const classes = useStyles();
 
-  const user = JSON.parse(localStorage.getItem('user'));
+  // const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div className={classes.root}>
@@ -41,4 +43,12 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+Dashboard.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
+};
+
+export default connect(mapStateToProps, null)(Dashboard);

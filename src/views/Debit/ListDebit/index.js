@@ -49,7 +49,6 @@ const styles = {
 };
 
 const Debit = ({ classes, getDebit, debit }) => {
-  console.log('Debit -> debit', debit);
   // const [page, setPage] = useState(1);
 
   // const handleChangePage = (event, value) => {

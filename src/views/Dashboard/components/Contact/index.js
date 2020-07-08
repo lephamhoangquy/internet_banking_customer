@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import ContactsIcon from '@material-ui/icons/Contacts';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +48,9 @@ const TasksProgress = (props) => {
             >
               Danh Sách Người Nhận
             </Typography>
-            <Typography variant="h3">{`${user.list_contact.length} tài khoản`}</Typography>
+            <Typography variant="h3">
+              {!_.isEmpty(user) && `${user.list_contact.length} tài khoản`}
+            </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
