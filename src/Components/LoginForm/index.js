@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/require-default-props */
 /* eslint-disable import/no-mutable-exports */
 import React from 'react';
@@ -11,12 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import TextField from '../CustomField/TextField';
 import CopyRight from '../CopyRight';
 
@@ -38,18 +38,22 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  remember: {
+  forgetPass: {
     marginTop: 10,
+    color: '#007bff',
+    textDecoration: 'none',
+    backgroundColor: 'transparent',
+    '&:hover': {
+      cursor: 'pointer',
+      textDecoration: 'underline',
+    },
   },
 }));
 
 let LoginForm = (props) => {
   const classes = useStyles();
-  const { handleSubmit, user } = props;
+  const { handleSubmit, user, handleClickOpen } = props;
   const isLogin = _.get(user, 'isLogin', null);
-  function onChange(value) {
-    console.log('Captcha value:', value);
-  }
   return (
     <Container component="main" maxWidth="xs">
       {/* Check login failure => alert  */}
@@ -90,11 +94,9 @@ let LoginForm = (props) => {
               />
             </Grid>
           </Grid>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-            className={classes.remember}
-          />
+          <div className={classes.forgetPass}>
+            <span onClick={handleClickOpen}>Quên mật khẩu?</span>
+          </div>
           <Button
             type="submit"
             fullWidth
@@ -104,11 +106,10 @@ let LoginForm = (props) => {
           >
             Đăng nhập
           </Button>
-          <ReCAPTCHA
+          {/* <ReCAPTCHA
             sitekey="6LePB6cZAAAAAK2Q7aRVXHqaz-zzPrkUrOLJ2JmQ"
             onChange={onChange}
-          />
-          ,
+          /> */}
         </form>
       </div>
       <Box mt={5}>
@@ -124,6 +125,7 @@ LoginForm = reduxForm({
 
 LoginForm.propTypes = {
   handleSubmit: PropTypes.func,
+  handleClickOpen: PropTypes.func,
   user: PropTypes.instanceOf(Object).isRequired,
 };
 

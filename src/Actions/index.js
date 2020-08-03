@@ -11,11 +11,14 @@ export const loginEmployee = (email, password, ownProps) => {
     try {
       const ret = await trackPromise(service.login(email, password));
       if (ret.status === 200) {
-        const { accessToken, refreshToken, user } = ret.data;
+        const { accessToken, refreshToken, customer } = ret.data;
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('user', JSON.stringify(_.omit(user, 'password')));
-        dispatch(loginEmployeeSuccess(ret.data.user));
+        localStorage.setItem(
+          'user',
+          JSON.stringify(_.omit(customer, 'password')),
+        );
+        dispatch(loginEmployeeSuccess(ret.data.customer));
         ownProps.history.push('/info');
       }
     } catch (error) {
@@ -135,6 +138,22 @@ export const createContact = (reminderName, accountNumber) => {
   }
 };
 
+export const updateContact = (accNumber, reminderName) => {
+  return async () => {
+    try {
+      const res = await trackPromise(
+        service.updateContact(accNumber, reminderName),
+      );
+      if (res.status === 200) {
+        alert('Cập nhật thành công');
+      }
+    } catch (error) {
+      alert('Xảy ra lỗi');
+      throw error;
+    }
+  };
+};
+
 export const getContactList = () => {
   return async (dispatch) => {
     try {
@@ -209,12 +228,12 @@ export const getListDebit = () => {
   }
 };
 
-export const getProfile = (accNumber) => {
+export const getProfile = () => {
   return async (dispatch) => {
     try {
-      const res = await trackPromise(service.getProfile(accNumber));
+      const res = await trackPromise(service.getProfile());
       if (res.status === 200) {
-        dispatch(success(res.data.customer));
+        dispatch(success(res.data.my_account));
       }
     } catch (error) {
       alert('Không tìm thấy số tài khoản này. ');
@@ -225,6 +244,26 @@ export const getProfile = (accNumber) => {
     return {
       type: constant.GET_PROFILE,
       payload: data,
+    };
+  }
+};
+
+export const forgotPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.forgotPassword(email));
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Vui lòng nhập mã OTP được nhận từ email.');
+      }
+    } catch (error) {
+      alert('Email không tồn tại trong hệ thống.');
+      throw error;
+    }
+  };
+  function success() {
+    return {
+      type: constant.FORGOT_PASWORD,
     };
   }
 };

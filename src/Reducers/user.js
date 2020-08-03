@@ -8,7 +8,7 @@ const user = (state = {}, action) => {
       return { ...state };
     case GET_PROFILE:
       state = action.payload;
-      return { ...state, isLogin: true };
+      return { ...state };
     case LOGIN_FAILED:
       return { isLogin: false };
     default:

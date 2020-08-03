@@ -22,7 +22,7 @@ export const getTransactionLog = (
   };
   return callApi(
     urlApi,
-    `employee/history/${accNumber}?q=${JSON.stringify(
+    `customer/history/${accNumber}?q=${JSON.stringify(
       query,
     )}&page=${page}&per_page=10`,
     'GET',
@@ -44,7 +44,7 @@ export const createDebit = (id, amount, message) =>
   });
 
 export const createContact = (reminder_name, account_number) =>
-  callApi(urlApi, `customer/create-contact`, 'PUT', authHeader(), {
+  callApi(urlApi, `customer/create-contact`, 'POST', authHeader(), {
     reminder_name,
     account_number,
   });
@@ -64,7 +64,13 @@ export const deleteContact = (accNumber) =>
 export const getListDebit = () =>
   callApi(urlApi, `customer/debits`, 'GET', authHeader(), null);
 
-export const getProfile = (account_number) =>
-  callApi(urlApi, `employee/verify-customer`, 'POST', authHeader(), {
-    account_number,
+export const getProfile = () =>
+  callApi(urlApi, `customer/my-account`, 'GET', authHeader(), null);
+
+export const forgotPassword = (email) =>
+  callApi(urlApi, `auth/customer/forgot_password`, 'POST', null, { email });
+
+export const updateContact = (accNumber, reminder_name) =>
+  callApi(urlApi, `customer/list-contacts/${accNumber}`, 'PUT', authHeader(), {
+    reminder_name,
   });

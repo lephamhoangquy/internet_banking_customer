@@ -6,6 +6,7 @@ import customer from './customer';
 import contact from './contact';
 import inputEditContact from './inputEditContact';
 import debit from './debit';
+import forgotPassword from './forgotPassword';
 
 const appReducer = combineReducers({
   form: formReducer,
@@ -15,5 +16,6 @@ const appReducer = combineReducers({
   contact,
   inputEditContact,
   debit,
+  forgotPassword,
 });
 export default appReducer;

@@ -1,1 +1,2 @@
-export const urlApi = 'http://localhost:5000/api/v1';
+export const urlApi =
+  'http://ebanking-env.eba-b5wfv7am.us-east-2.elasticbeanstalk.com/api/v1';

@@ -19,7 +19,7 @@ const App = ({ getMyProfile }) => {
   useEffect(() => {
     socket.emit('init', token);
     if (user) {
-      getMyProfile(user.account_number);
+      getMyProfile();
     }
   }, []);
 
@@ -34,8 +34,8 @@ const App = ({ getMyProfile }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMyProfile: (accNumber) => {
-      dispatch(getProfile(accNumber));
+    getMyProfile: () => {
+      dispatch(getProfile());
     },
   };
 };

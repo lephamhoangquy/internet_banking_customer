@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import ContactForm from './createForm';
-import { createContact } from '../../../Actions';
+import { createContact, updateContact } from '../../../Actions';
 
-const Contact = ({ createNewContact, inputEdit }) => {
+const Contact = ({ createNewContact, inputEdit, editContact }) => {
   const submit = (values) => {
     const { reminderName, accountNumber } = values;
-    createNewContact(reminderName, accountNumber);
+    if (_.isEmpty(inputEdit)) {
+      createNewContact(reminderName, accountNumber);
+    } else {
+      editContact(accountNumber, reminderName);
+    }
   };
 
   return <ContactForm initialValues={inputEdit} onSubmit={submit} />;
@@ -22,11 +27,15 @@ const mapDispatchToProps = (dispatch) => {
     createNewContact: (reminderName, accountNumber) => {
       dispatch(createContact(reminderName, accountNumber));
     },
+    editContact: (accountNumber, reminderName) => {
+      dispatch(updateContact(accountNumber, reminderName));
+    },
   };
 };
 
 Contact.propTypes = {
   createNewContact: PropTypes.func.isRequired,
+  editContact: PropTypes.func.isRequired,
   inputEdit: PropTypes.instanceOf(Object).isRequired,
 };
 
