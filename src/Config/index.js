@@ -1,2 +1,1 @@
-export const urlApi =
-  'http://ebanking-env.eba-b5wfv7am.us-east-2.elasticbeanstalk.com/api/v1';
+export const urlApi = 'https://qbanking.herokuapp.com/api/v1';
