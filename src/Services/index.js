@@ -74,3 +74,9 @@ export const updateContact = (accNumber, reminder_name) =>
   callApi(urlApi, `customer/list-contacts/${accNumber}`, 'PUT', authHeader(), {
     reminder_name,
   });
+
+export const updatePassword = (currentPassword, newPassword) =>
+  callApi(urlApi, `auth/customer/update_password`, 'PUT', authHeader(), {
+    currentPassword,
+    newPassword,
+  });

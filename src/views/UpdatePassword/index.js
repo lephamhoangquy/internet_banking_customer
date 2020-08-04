@@ -1,39 +1,34 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import { Grid, CardHeader } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import UpdateIcon from '@material-ui/icons/Update';
-import ReceiveOTP from './components/Password/ReceiveOTP';
+import { SubmissionError } from 'redux-form';
+import Password from './UpdateForm';
+import { updatePassword } from '../../Actions';
 
-const styles = {
-  title: {
-    display: 'flex',
-    justifyContent: 'center',
-    '& svg': {
-      margin: '15px 10px',
-    },
-  },
-};
-
-const UpdatePassword = ({ classes }) => {
+const UpdatePassword = ({ update }) => {
+  const submit = (values) => {
+    if (values.newPassword && values.newPassword.length < 8)
+      throw new SubmissionError({ newPassword: 'Mật khẩu phải trên 8 ký tự' });
+    update(values.currentPassword, values.newPassword);
+  };
   return (
-    <div>
-      <Grid container spacing={4}>
-        <Grid item md={12} xs={12}>
-          <div className={classes.title}>
-            <UpdateIcon fontSize="large" />
-            <h2>Cập nhật mật khẩu</h2>
-          </div>
-          <ReceiveOTP />
-        </Grid>
-      </Grid>
+    <div style={{ padding: 50 }}>
+      <Password onSubmit={submit} />
     </div>
   );
 };
 
-UpdatePassword.propTypes = {
-  classes: PropTypes.instanceOf(Object),
+const mapDispatchToProps = (dispatch) => {
+  return {
+    update: (currentPass, newPass) => {
+      dispatch(updatePassword(currentPass, newPass));
+    },
+  };
 };
 
-export default withStyles(styles)(UpdatePassword);
+UpdatePassword.propTypes = {
+  update: PropTypes.func,
+};
+
+export default connect(null, mapDispatchToProps)(UpdatePassword);

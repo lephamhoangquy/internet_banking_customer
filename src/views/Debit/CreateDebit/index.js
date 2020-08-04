@@ -85,8 +85,8 @@ const mapDispatchToProps = (dispatch) => {
     findCustomerDebit: (accNumber) => {
       dispatch(findCustomer(accNumber));
     },
-    createNewDebit: (id, amount, message) => {
-      dispatch(createDebit(id, amount, message));
+    createNewDebit: (account_number, amount, message) => {
+      dispatch(createDebit(account_number, amount, message));
     },
   };
 };

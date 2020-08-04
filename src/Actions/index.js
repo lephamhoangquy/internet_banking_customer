@@ -40,6 +40,21 @@ export const loginEmployee = (email, password, ownProps) => {
   }
 };
 
+export const updatePassword = (currentPassword, newPassword) => {
+  return async () => {
+    try {
+      const res = await trackPromise(
+        service.updatePassword(currentPassword, newPassword),
+      );
+      if (res.status === 200) {
+        alert('Cập nhật mật khẩu thành công');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra. Vui lòng điền đúng mật khẩu hiện tại');
+    }
+  };
+};
+
 export const fetchTransaction = (
   accNumber,
   page,

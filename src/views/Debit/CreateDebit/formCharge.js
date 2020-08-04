@@ -18,7 +18,7 @@ let Charge = ({ open, handleClose, handleSubmit }) => {
         onClose={() => handleClose(false)}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Nạp tiền vào tài khoản</DialogTitle>
+        <DialogTitle id="form-dialog-title">Thông tin nhắc nợ</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
             <Field

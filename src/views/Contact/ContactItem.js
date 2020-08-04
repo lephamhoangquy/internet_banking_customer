@@ -10,6 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import DialogConfirm from './Dialog';
+import Debit from '../Debit/CreateDebit/formCharge';
 
 const styles = {
   delete: {
@@ -22,8 +23,11 @@ const TransactionItem = ({
   index,
   classes,
   removeContact,
+  handleDebit,
+  setAccoutNumber,
 }) => {
   const [open, setOpen] = useState(false);
+  const [openDebit, setOpenDebit] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -33,6 +37,15 @@ const TransactionItem = ({
     setOpen(true);
   };
 
+  const handleCloseDebit = () => {
+    setOpenDebit(false);
+  };
+
+  const handleOpenDebit = () => {
+    setOpenDebit(true);
+    setAccoutNumber(contact.account_number);
+  };
+
   const { account_number, reminder_name } = contact;
   return (
     <>
@@ -40,6 +53,24 @@ const TransactionItem = ({
         <TableCell>{index}</TableCell>
         <TableCell>{account_number}</TableCell>
         <TableCell>{reminder_name}</TableCell>
+        <TableCell>
+          <Button
+            style={{ marginRight: 4 }}
+            color="primary"
+            size="small"
+            variant="outlined"
+          >
+            Chuyển khoản
+          </Button>
+          <Button
+            onClick={handleOpenDebit}
+            className={classes.delete}
+            size="small"
+            variant="outlined"
+          >
+            Nhắc nợ
+          </Button>
+        </TableCell>
         <TableCell>
           <Link to="/create-contact">
             <Button
@@ -61,6 +92,11 @@ const TransactionItem = ({
         open={open}
         handleClose={handleClose}
       />
+      <Debit
+        open={openDebit}
+        handleClose={handleCloseDebit}
+        onSubmit={handleDebit}
+      />
     </>
   );
 };
@@ -70,6 +106,8 @@ TransactionItem.propTypes = {
   contact: PropTypes.instanceOf(Object).isRequired,
   classes: PropTypes.instanceOf(Object).isRequired,
   setEdit: PropTypes.func.isRequired,
+  setAccoutNumber: PropTypes.func.isRequired,
+  handleDebit: PropTypes.func.isRequired,
   removeContact: PropTypes.func.isRequired,
 };
 

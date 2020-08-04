@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
@@ -14,6 +15,7 @@ import {
   getContactList,
   setEditContactForm,
   deleteContact,
+  createDebit,
 } from '../../Actions';
 import HeadList from './HeadTable';
 import ContactList from '../../Components/Dashboard/TableBody';
@@ -37,10 +39,24 @@ const styles = {
   },
 };
 
-const Contact = ({ classes, getContact, contact, setEdit, removeContact }) => {
+const Contact = ({
+  classes,
+  getContact,
+  contact,
+  setEdit,
+  removeContact,
+  createNewDebit,
+}) => {
   useEffect(() => {
     getContact();
   }, []);
+
+  const [account_number, setAccoutNumber] = useState(null);
+
+  const handleDebit = (values) => {
+    const { amount, message } = values;
+    createNewDebit(account_number, amount, message);
+  };
 
   return (
     <div>
@@ -62,6 +78,8 @@ const Contact = ({ classes, getContact, contact, setEdit, removeContact }) => {
             {Array.isArray(contact) &&
               contact.map((elem, index) => (
                 <ContactItem
+                  handleDebit={handleDebit}
+                  setAccoutNumber={setAccoutNumber}
                   setEdit={setEdit}
                   key={index}
                   index={index + 1}
@@ -91,6 +109,9 @@ const mapDispatchToProps = (dispatch) => {
     removeContact: (accNumber) => {
       dispatch(deleteContact(accNumber));
     },
+    createNewDebit: (account_number, amount, message) => {
+      dispatch(createDebit(account_number, amount, message));
+    },
   };
 };
 
@@ -100,6 +121,7 @@ Contact.propTypes = {
   getContact: PropTypes.func.isRequired,
   setEdit: PropTypes.func.isRequired,
   removeContact: PropTypes.func.isRequired,
+  createNewDebit: PropTypes.func.isRequired,
 };
 
 export default compose(

@@ -14,7 +14,8 @@ const HeadTable = ({ classes }) => {
     { id: 1, name: 'STT' },
     { id: 2, name: 'Số tài khoản' },
     { id: 3, name: 'Tên gợi nhớ' },
-    { id: 4, name: '' },
+    { id: 4, name: 'Thao tác' },
+    { id: 5, name: '' },
   ];
   return (
     <TableHead>
