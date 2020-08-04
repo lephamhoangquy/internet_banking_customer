@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-alert */
 /* eslint-disable react/require-default-props */
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
@@ -21,20 +21,10 @@ const styles = {
   },
 };
 
-const Charge = ({ findCustomerTrans, customer, chargeMoney, classes }) => {
-  const [isOpenCharge, setOpenCharge] = useState(false);
-  const [accNumber, setAccNumber] = useState(null);
-
+const Charge = ({ findCustomerTrans, customer, classes }) => {
   const onSearch = (values) => {
     const { account_number } = values;
     findCustomerTrans(account_number);
-    // setAccNumber(account_number);
-  };
-
-  const onCharge = (values) => {
-    const { amount } = values;
-    chargeMoney(accNumber, amount);
-    setOpenCharge(false);
   };
 
   return (
@@ -43,15 +33,8 @@ const Charge = ({ findCustomerTrans, customer, chargeMoney, classes }) => {
         <LocalAtmIcon fontSize="large" />
         <h2>Chuyển tiền vào tài khoản</h2>
       </div>
-      <Search isOpenCharge={isOpenCharge} onSubmit={onSearch} />
-      {customer.isFind && (
-        <InfoCustomer
-          customer={customer}
-          onCharge={onCharge}
-          isOpenCharge={isOpenCharge}
-          setOpenCharge={setOpenCharge}
-        />
-      )}
+      <Search onSubmit={onSearch} />
+      {customer.isFind && <InfoCustomer customer={customer} />}
     </div>
   );
 };

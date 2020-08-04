@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
@@ -44,7 +45,8 @@ const styles = {
   },
 };
 
-const InfoCustomer = ({ customer, setOpenCharge, classes }) => {
+const InfoCustomer = ({ customer, classes }) => {
+  const { account_number } = customer;
   return (
     <Container>
       <Paper className={classes.content}>
@@ -52,7 +54,7 @@ const InfoCustomer = ({ customer, setOpenCharge, classes }) => {
         <div className={classes.info}>
           <div className={classes.row}>
             <div className={classes.label}>Họ và tên: </div>
-            <div className={classes.value}>{customer.fullname}</div>
+            <div className={classes.value}>{customer.username}</div>
           </div>
           <div className={classes.row}>
             <div className={classes.label}>Email: </div>
@@ -68,17 +70,19 @@ const InfoCustomer = ({ customer, setOpenCharge, classes }) => {
           </div>
           <div className={classes.row}>
             <div className={classes.label}>STK: </div>
-            <div className={classes.value}>{customer.account_number}</div>
+            <div className={classes.value}>{account_number}</div>
           </div>
         </div>
         <div className={classes.btnCharge}>
-          <Link to="/transaction/charge">
-            <Button
-              onClick={() => setOpenCharge(true)}
-              variant="contained"
-              color="primary"
-              type="button"
-            >
+          <Link
+            to={{
+              pathname: '/transaction/charge',
+              aboutProps: {
+                account_number,
+              },
+            }}
+          >
+            <Button variant="contained" color="primary" type="button">
               Chuyển tiền
             </Button>
           </Link>
@@ -90,9 +94,6 @@ const InfoCustomer = ({ customer, setOpenCharge, classes }) => {
 
 InfoCustomer.propTypes = {
   classes: PropTypes.instanceOf(Object),
-  isOpenCharge: PropTypes.bool,
-  setOpenCharge: PropTypes.func,
-  onCreate: PropTypes.func,
   customer: PropTypes.instanceOf(Object),
 };
 

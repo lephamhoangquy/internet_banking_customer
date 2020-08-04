@@ -285,3 +285,60 @@ export const forgotPassword = (email) => {
     };
   }
 };
+
+export const transferInternal = (
+  sender_account_number,
+  receiver_account_number,
+  amount,
+  message,
+  transfer_method,
+) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(
+        service.transferInternal(
+          sender_account_number,
+          receiver_account_number,
+          amount,
+          message,
+          transfer_method,
+        ),
+      );
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Vui lòng kiểm tra email và xác thực mã OTP');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra, vui lòng kiểm tra lại.');
+      throw error;
+    }
+  };
+  function success() {
+    return {
+      type: constant.TRANSFER_INTERNAL,
+    };
+  }
+};
+
+export const verifyTransferOTP = (OTP, email) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.verifyTransferOTP(OTP, email));
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Chuyển tiền thành công');
+      }
+    } catch (error) {
+      alert('OTP không chính xác. Vui lòng kiểm tra lại. ');
+    }
+  };
+  function success() {
+    return {
+      type: constant.VERIFY_TRANSFER_OTP,
+    };
+  }
+};
+
+export const resetStateTransfer = () => ({
+  type: constant.RESET_TRANSFER,
+});

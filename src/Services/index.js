@@ -80,3 +80,24 @@ export const updatePassword = (currentPassword, newPassword) =>
     currentPassword,
     newPassword,
   });
+
+export const transferInternal = (
+  sender_account_number,
+  receiver_account_number,
+  amount,
+  message,
+  transfer_method,
+) =>
+  callApi(urlApi, `transfer/internal`, 'POST', authHeader(), {
+    sender_account_number,
+    receiver_account_number,
+    amount,
+    message,
+    transfer_method,
+  });
+
+export const verifyTransferOTP = (OTP, email) =>
+  callApi(urlApi, `transfer/customer/verify/code`, 'POST', authHeader(), {
+    OTP,
+    email,
+  });

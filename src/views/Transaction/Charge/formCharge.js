@@ -40,11 +40,13 @@ const styles = {
   fieldSelect: {
     '& div': {
       width: '44%',
+      marginBottom: 16,
     },
   },
 };
 
-let CreateContact = ({ classes, handleSubmit }) => {
+let CreateContact = ({ classes, handleSubmit, transfer }) => {
+  const { isTransfer } = transfer;
   return (
     <div>
       <div className={classes.title}>
@@ -92,9 +94,19 @@ let CreateContact = ({ classes, handleSubmit }) => {
               <option value={2}>Người nhận trả phí</option>
             </Field>
           </div>
+          <div className={classes.field}>
+            <Field
+              name="OTP"
+              component={TextField}
+              fullWidth
+              label="Nhập mã OTP"
+              variant="outlined"
+              disabled={!isTransfer}
+            />
+          </div>
           <div className={classes.btn}>
             <Button type="submit" variant="contained" color="primary">
-              Chuyển ngay
+              {isTransfer ? `Xác nhận` : `Chuyển ngay`}
             </Button>
           </div>
         </form>
@@ -109,6 +121,7 @@ CreateContact = reduxForm({
 
 CreateContact.propTypes = {
   classes: PropTypes.instanceOf(Object),
+  transfer: PropTypes.instanceOf(Object),
   handleSubmit: PropTypes.func,
 };
 
