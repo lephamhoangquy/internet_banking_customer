@@ -54,14 +54,25 @@ const TransactionItem = ({
         <TableCell>{account_number}</TableCell>
         <TableCell>{reminder_name}</TableCell>
         <TableCell>
-          <Button
-            style={{ marginRight: 4 }}
-            color="primary"
-            size="small"
-            variant="outlined"
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={{
+              pathname: '/transaction/charge',
+              aboutProps: {
+                account_number,
+              },
+            }}
           >
-            Chuyển khoản
-          </Button>
+            <Button
+              style={{ marginRight: 4 }}
+              color="primary"
+              size="small"
+              variant="outlined"
+            >
+              Chuyển khoản
+            </Button>
+          </Link>
+
           <Button
             onClick={handleOpenDebit}
             className={classes.delete}
