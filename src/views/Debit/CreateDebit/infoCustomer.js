@@ -55,7 +55,7 @@ const InfoCustomer = ({
         <div className={classes.info}>
           <div className={classes.row}>
             <div className={classes.label}>Họ và tên: </div>
-            <div className={classes.value}>{customer.fullname}</div>
+            <div className={classes.value}>{customer.username}</div>
           </div>
           <div className={classes.row}>
             <div className={classes.label}>Email: </div>

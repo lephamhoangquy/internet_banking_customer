@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-alert */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-useless-catch */
@@ -87,7 +88,7 @@ export const findCustomer = (accNumber) => {
     try {
       const res = await trackPromise(service.findCustomer(accNumber));
       if (res.status === 200) {
-        dispatch(success(res.data.customer));
+        dispatch(success(res.data.data));
       }
     } catch (error) {
       alert('Không tìm thấy số tài khoản');
@@ -102,10 +103,12 @@ export const findCustomer = (accNumber) => {
   }
 };
 
-export const createDebit = (id, amount, message) => {
+export const createDebit = (account_number, amount, message) => {
   return async () => {
     try {
-      const res = await trackPromise(service.createDebit(id, amount, message));
+      const res = await trackPromise(
+        service.createDebit(account_number, amount, message),
+      );
       if (res.status === 200 && res.data.message === 'Success') {
         alert('Nhắc nợ thành công');
       }
@@ -209,12 +212,12 @@ export const deleteContact = (accNumber) => {
   }
 };
 
-export const getListDebit = () => {
+export const getListDebit = (page) => {
   return async (dispatch) => {
     try {
-      const res = await trackPromise(service.getListDebit());
+      const res = await trackPromise(service.getListDebit(page));
       if (res.status === 200) {
-        dispatch(success(res.data.debits));
+        dispatch(success(res.data));
       }
     } catch (error) {
       throw error;

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-alert */
 /* eslint-disable react/require-default-props */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -9,7 +9,7 @@ import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-// import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@material-ui/lab/Pagination';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -49,17 +49,17 @@ const styles = {
 };
 
 const Debit = ({ classes, getDebit, debit }) => {
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-  // const handleChangePage = (event, value) => {
-  //   setPage(value);
-  // };
+  const handleChangePage = (event, value) => {
+    setPage(value);
+  };
 
   useEffect(() => {
-    getDebit();
-  }, []);
+    getDebit(page);
+  }, [page]);
 
-  // const { total, items } = transaction;
+  const { total, items } = debit;
 
   return (
     <div>
@@ -78,21 +78,21 @@ const Debit = ({ classes, getDebit, debit }) => {
         <Table>
           <HeadList />
           <DebitList>
-            {Array.isArray(debit) &&
-              debit.map((elem, index) => (
+            {Array.isArray(items) &&
+              items.map((elem, index) => (
                 <DebitItem key={elem.id} index={index + 1} debit={elem} />
               ))}
           </DebitList>
         </Table>
       </TableContainer>
-      {/* {(!Array.isArray(items) || items.length === 0) && (
+      {(!Array.isArray(items) || items.length === 0) && (
         <div className={classes.notFound}>
           <p>Không có giao dịch nào.</p>
         </div>
-      )} */}
-      {/* <div className={classes.pagination}>
+      )}
+      <div className={classes.pagination}>
         <Pagination count={Math.ceil(total / 10)} onChange={handleChangePage} />
-      </div> */}
+      </div>
     </div>
   );
 };
@@ -103,8 +103,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getDebit: () => {
-      dispatch(getListDebit());
+    getDebit: (page) => {
+      dispatch(getListDebit(page));
     },
   };
 };
@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch) => {
 Debit.propTypes = {
   classes: PropTypes.instanceOf(Object),
   getDebit: PropTypes.func,
-  debit: PropTypes.instanceOf(Array),
+  debit: PropTypes.instanceOf(Object),
 };
 
 export default compose(

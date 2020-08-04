@@ -1,6 +1,5 @@
 import socketIOClient from 'socket.io-client';
 
-const ENDPOINT =
-  'http://ebanking-env.eba-b5wfv7am.us-east-2.elasticbeanstalk.com';
+const ENDPOINT = 'https://qbanking.herokuapp.com';
 
 export const socket = socketIOClient(ENDPOINT);

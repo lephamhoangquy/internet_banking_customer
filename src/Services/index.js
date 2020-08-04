@@ -36,9 +36,9 @@ export const findCustomer = (account_number) =>
     account_number,
   });
 
-export const createDebit = (id, amount, message) =>
+export const createDebit = (account_number, amount, message) =>
   callApi(urlApi, 'debit', 'POST', authHeader(), {
-    reminder_id: id,
+    account_number,
     amount,
     message,
   });
@@ -61,8 +61,8 @@ export const deleteContact = (accNumber) =>
     null,
   );
 
-export const getListDebit = () =>
-  callApi(urlApi, `customer/debits`, 'GET', authHeader(), null);
+export const getListDebit = (page) =>
+  callApi(urlApi, `debit?page=${page}&per_page=10`, 'GET', authHeader(), null);
 
 export const getProfile = () =>
   callApi(urlApi, `customer/my-account`, 'GET', authHeader(), null);

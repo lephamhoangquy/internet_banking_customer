@@ -42,10 +42,10 @@ const Charge = ({ findCustomerDebit, customer, createNewDebit, classes }) => {
   };
 
   const onCreate = (values) => {
-    const { id } = customer;
+    const { account_number } = customer;
     const { amount, message } = values;
-    if (id) {
-      createNewDebit(id, amount, message);
+    if (account_number) {
+      createNewDebit(account_number, amount, message);
       setOpenCharge(false);
     }
   };
