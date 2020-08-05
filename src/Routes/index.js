@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import RouteWithLayout from '../Components/RouteWithLayout';
 import { Main as MainLayout, Minimal as MinimalLayout } from '../layouts';
 import { LoginRoute } from '../Components/PrivateRoute';
@@ -13,6 +13,7 @@ import Contact from '../views/Contact';
 import CreateContact from '../views/Contact/CreateContact';
 import Transaction from '../views/Transaction';
 import Charge from '../views/Transaction/Charge';
+import ForgotPassword from '../views/ForgotPassword';
 
 const Routes = () => {
   return (
@@ -67,6 +68,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/transaction/charge"
+      />
+      <Route
+        component={ForgotPassword}
+        exact
+        // layout={MinimalLayout}
+        path="/forgot-password"
       />
       <RouteWithLayout
         component={NotFound}

@@ -101,3 +101,12 @@ export const verifyTransferOTP = (OTP, email) =>
     OTP,
     email,
   });
+
+export const verifyForgotOTP = (OTP, email) =>
+  callApi(urlApi, `auth/customer/verify/code`, 'POST', null, { OTP, email });
+
+export const resetPassword = (newPassword, email) =>
+  callApi(urlApi, `auth/customer/reset_password`, 'PUT', null, {
+    newPassword,
+    email,
+  });

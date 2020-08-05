@@ -286,6 +286,40 @@ export const forgotPassword = (email) => {
   }
 };
 
+export const verifyForgotOTP = (OTP, email) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.verifyForgotOTP(OTP, email));
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Vui lòng nhập mật khẩu mới. ');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra vui lòng kiểm tra mã code.');
+      throw error;
+    }
+  };
+  function success() {
+    return {
+      type: constant.VERIFY_FORGOT_PASSWORD,
+    };
+  }
+};
+
+export const resetPassword = (newPassword, email) => {
+  return async () => {
+    try {
+      const res = await trackPromise(service.resetPassword(newPassword, email));
+      if (res.status === 200) {
+        alert('Cập nhật mật khẩu thành công');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
+      throw error;
+    }
+  };
+};
+
 export const transferInternal = (
   sender_account_number,
   receiver_account_number,

@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: 60,
     height: 60,
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
+    textDecoration: 'none',
   },
   name: {
     marginTop: theme.spacing(1),
@@ -35,9 +39,10 @@ const Profile = (props) => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={user.avatar}
-        to="/settings"
-      />
+        to="/info"
+      >
+        {user.fullname.split(' ').slice(-1).join(' ')}
+      </Avatar>
       <Typography className={classes.name} variant="h4">
         {user.fullname}
       </Typography>

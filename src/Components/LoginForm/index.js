@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 // import ReCAPTCHA from 'react-google-recaptcha';
 import TextField from '../CustomField/TextField';
 import CopyRight from '../CopyRight';
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 let LoginForm = (props) => {
   const classes = useStyles();
-  const { handleSubmit, user, handleClickOpen } = props;
+  const { handleSubmit, user } = props;
   const isLogin = _.get(user, 'isLogin', null);
   return (
     <Container component="main" maxWidth="xs">
@@ -95,7 +96,9 @@ let LoginForm = (props) => {
             </Grid>
           </Grid>
           <div className={classes.forgetPass}>
-            <span onClick={handleClickOpen}>Quên mật khẩu?</span>
+            <Link to="/forgot-password">
+              <span>Quên mật khẩu?</span>
+            </Link>
           </div>
           <Button
             type="submit"

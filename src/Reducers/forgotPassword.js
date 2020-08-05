@@ -1,12 +1,18 @@
 /* eslint-disable no-param-reassign */
-import { FORGOT_PASWORD } from '../Constants';
+import { FORGOT_PASWORD, VERIFY_FORGOT_PASSWORD } from '../Constants';
 
-const forgotPassword = (state = { isForgot: false }, action) => {
-  switch (action.payload) {
+const initialState = { isForgot: false, isVerify: false };
+
+const forgotPassword = (state = initialState, action) => {
+  switch (action.type) {
     case FORGOT_PASWORD:
-      return { ...state, isForgot: true };
+      state.isForgot = true;
+      return { ...state };
+    case VERIFY_FORGOT_PASSWORD:
+      state.isVerify = true;
+      return { ...state };
     default:
-      return false;
+      return initialState;
   }
 };
 
