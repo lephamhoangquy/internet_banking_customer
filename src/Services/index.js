@@ -58,6 +58,9 @@ export const payDebit = (debitId) =>
 export const verifyPayDebitOTP = (OTP) =>
   callApi(urlApi, `debit/verify/code`, 'POST', authHeader(), { OTP });
 
+export const rejectDebit = (id, message) =>
+  callApi(urlApi, `debit/${id}`, 'PUT', authHeader(), { message });
+
 export const getContactList = () =>
   callApi(urlApi, `customer/list-contacts`, 'GET', authHeader(), null);
 

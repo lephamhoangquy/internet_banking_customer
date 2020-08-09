@@ -153,6 +153,27 @@ export const payDebit = (debitId) => {
   }
 };
 
+export const rejectDebit = (id, message) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.rejectDebit(id, message));
+      if (res.status === 200) {
+        dispatch(success(id));
+        alert('Hủy ghi nợ thành công');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
+      throw error;
+    }
+  };
+  function success(idDebit) {
+    return {
+      type: constant.REJECT_DEBIT,
+      id: idDebit,
+    };
+  }
+};
+
 export const verifyPayDebitOTP = (OTP) => {
   return async () => {
     try {

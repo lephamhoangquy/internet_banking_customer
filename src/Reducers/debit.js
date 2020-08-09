@@ -1,5 +1,12 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
-import { GET_LIST_DEBIT, PAY_DEBIT, CLOSE_OTP_FORM } from '../Constants';
+import _ from 'lodash';
+import {
+  GET_LIST_DEBIT,
+  PAY_DEBIT,
+  CLOSE_OTP_FORM,
+  REJECT_DEBIT,
+} from '../Constants';
 
 const initialState = { isPayDebit: false };
 
@@ -13,6 +20,11 @@ const debit = (state = initialState, action) => {
       return { ...state, isPayDebit: true };
     case CLOSE_OTP_FORM:
       return { ...state, isPayDebit: false };
+    case REJECT_DEBIT:
+      const cloneState = _.cloneDeep(state);
+      cloneState.total = state.total - 1;
+      cloneState.items = state.items.filter((elem) => elem.id !== action.id);
+      return { ...cloneState };
     default:
       return { ...state };
   }

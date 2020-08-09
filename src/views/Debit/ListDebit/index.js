@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import HeadList from './HeadTable';
 import DebitItem from './DebitItem';
-import { getListDebit, verifyPayDebitOTP } from '../../../Actions';
+import { getListDebit, verifyPayDebitOTP, rejectDebit } from '../../../Actions';
 import DebitList from '../../../Components/Dashboard/TableBody';
 
 const styles = {
@@ -56,8 +56,10 @@ const Debit = ({
   isPayDebit,
   handleCloseOTPForm,
   verify,
+  removeDebit,
 }) => {
   const [page, setPage] = useState(1);
+  const [idDebit, setIdDebit] = useState(null);
 
   const handleChangePage = (event, value) => {
     setPage(value);
@@ -72,6 +74,11 @@ const Debit = ({
     getDebit(page);
   }, [page]);
 
+  const handleSubmitRemove = ({ message }) => {
+    if (idDebit) {
+      removeDebit(idDebit, message);
+    }
+  };
   const { total, items } = debit;
 
   return (
@@ -101,6 +108,8 @@ const Debit = ({
                   isPayDebit={isPayDebit}
                   handleCloseOTPForm={handleCloseOTPForm}
                   handleSubmitOTP={handleSubmitOTP}
+                  setIdDebit={setIdDebit}
+                  handleSubmitRemove={handleSubmitRemove}
                 />
               ))}
           </DebitList>
@@ -130,12 +139,16 @@ const mapDispatchToProps = (dispatch) => {
     verify: (OTP) => {
       dispatch(verifyPayDebitOTP(OTP));
     },
+    removeDebit: (id, message) => {
+      dispatch(rejectDebit(id, message));
+    },
   };
 };
 
 Debit.propTypes = {
   classes: PropTypes.instanceOf(Object),
   getDebit: PropTypes.func,
+  removeDebit: PropTypes.func,
   debit: PropTypes.instanceOf(Object),
   payDebit: PropTypes.func,
   isPayDebit: PropTypes.bool,
