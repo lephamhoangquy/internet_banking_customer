@@ -17,27 +17,21 @@ let Charge = ({ open, handleClose, handleSubmit }) => {
       onClose={() => handleClose(false)}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Thông tin nhắc nợ</DialogTitle>
+      <DialogTitle id="form-dialog-title">Xác nhận mã OTP</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <Field
-            name="amount"
-            label="Nhập số tiền"
+            name="OTP"
+            label="Nhập mã OTP"
             component={TextField}
             type="number"
-          />
-          <Field
-            name="message"
-            label="Nhập lời nhắn"
-            component={TextField}
-            type="text"
           />
           <DialogActions>
             <Button onClick={() => handleClose(false)} color="primary">
               Trở lại
             </Button>
             <Button type="submit" variant="contained" color="primary">
-              Nhắc nợ
+              Xác nhận
             </Button>
           </DialogActions>
         </form>

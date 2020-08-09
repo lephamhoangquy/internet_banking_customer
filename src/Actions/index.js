@@ -133,6 +133,44 @@ export const createDebit = (account_number, amount, message) => {
   };
 };
 
+export const payDebit = (debitId) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(service.payDebit(debitId));
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Vui lòng kiểm tra email và điền mã OTP. ');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
+      throw error;
+    }
+  };
+  function success() {
+    return {
+      type: constant.PAY_DEBIT,
+    };
+  }
+};
+
+export const verifyPayDebitOTP = (OTP) => {
+  return async () => {
+    try {
+      const res = await trackPromise(service.verifyPayDebitOTP(OTP));
+      if (res.status === 200) {
+        alert('Thanh toán nợ thành công');
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra. Vui lòng kiểm tra mã OTP. ');
+      throw error;
+    }
+  };
+};
+
+export const closeOTPForm = () => ({
+  type: constant.CLOSE_OTP_FORM,
+});
+
 export const createContact = (reminderName, accountNumber) => {
   return async (dispatch) => {
     try {
@@ -376,3 +414,31 @@ export const verifyTransferOTP = (OTP, email) => {
 export const resetStateTransfer = () => ({
   type: constant.RESET_TRANSFER,
 });
+
+export const transferPartner = (
+  sender_account_number,
+  receiver_account_number,
+  amount,
+  message,
+  transfer_method,
+  transaction_type,
+) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(
+        service.transferPartner(
+          sender_account_number,
+          receiver_account_number,
+          amount,
+          message,
+          transfer_method,
+          transaction_type,
+        ),
+      );
+      console.log('res', res);
+    } catch (error) {
+      alert('Có lỗi xảy ra, vui lòng kiểm tra lại.');
+      throw error;
+    }
+  };
+};

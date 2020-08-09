@@ -60,6 +60,7 @@ const TransactionItem = ({
               pathname: '/transaction/charge',
               aboutProps: {
                 account_number,
+                fromContact: true,
               },
             }}
           >

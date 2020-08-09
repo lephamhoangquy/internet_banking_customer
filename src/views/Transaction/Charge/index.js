@@ -10,16 +10,17 @@ import { transferInternal, verifyTransferOTP } from '../../../Actions';
 const Charge = (props) => {
   const { aboutProps } =
     props.location.aboutProps !== undefined && props.location;
-  const { account_number } = aboutProps !== undefined && aboutProps;
+  const { account_number, isDebit, fromContact } =
+    aboutProps !== undefined && aboutProps;
 
   const { transfer, transferState, verifyOTP } = props;
 
   const submit = (values) => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const { amount, message, transfer_method, OTP } = values;
+    const { amount, message, transfer_method, OTP, transaction_type } = values;
     if (OTP) {
       verifyOTP(OTP, user.email);
-    } else {
+    } else if (transaction_type === '1') {
       transfer(
         user.account_number,
         account_number,
@@ -27,11 +28,18 @@ const Charge = (props) => {
         message,
         Number(transfer_method),
       );
+    } else if (transaction_type === '2') {
+      console.log('external');
     }
   };
   return (
     <>
-      <ChargeForm transfer={transferState} onSubmit={submit} />
+      <ChargeForm
+        fromContact={fromContact}
+        isDebit={isDebit}
+        transfer={transferState}
+        onSubmit={submit}
+      />
     </>
   );
 };

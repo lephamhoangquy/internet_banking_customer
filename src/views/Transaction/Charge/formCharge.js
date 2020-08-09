@@ -9,7 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import MoneyIcon from '@material-ui/icons/Money';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import TextField from '../../../Components/CustomField/TextField';
 import { renderSelectField } from '../../../Components/CustomField/SelectField';
 
@@ -37,28 +38,39 @@ const styles = {
       textDecoration: 'none',
     },
   },
-  fieldSelect: {
+  fieldSelectMethod: {
     '& div': {
-      width: '44%',
+      width: '63%',
+      marginBottom: 16,
+    },
+  },
+  fieldSelectType: {
+    '& div': {
+      width: '68%',
       marginBottom: 16,
     },
   },
 };
 
-let CreateContact = ({ classes, handleSubmit, transfer }) => {
+let FormCharge = ({
+  classes,
+  handleSubmit,
+  transfer,
+  history,
+  isDebit,
+  fromContact,
+}) => {
   const { isTransfer } = transfer;
   return (
     <div>
       <div className={classes.title}>
         <div className={classes.back}>
-          <Link to="/transaction">
-            <Button color="primary">
-              <KeyboardBackspaceIcon />
-            </Button>
-          </Link>
+          <Button color="primary" onClick={() => history.goBack()}>
+            <KeyboardBackspaceIcon />
+          </Button>
         </div>
         <MoneyIcon fontSize="large" />
-        <h2>Chuyển tiền</h2>
+        <h2>{isDebit ? `Thanh toán nợ` : `Chuyển tiền`}</h2>
       </div>
       <Paper>
         <form onSubmit={handleSubmit} className={classes.form}>
@@ -82,17 +94,38 @@ let CreateContact = ({ classes, handleSubmit, transfer }) => {
               variant="outlined"
             />
           </div>
-          <div className={classes.fieldSelect}>
-            <Field
-              name="transfer_method"
-              label="Hình thức thanh toán"
-              component={renderSelectField}
-              required
-            >
-              <option value="" disabled />
-              <option value={1}>Người gửi trả phí</option>
-              <option value={2}>Người nhận trả phí</option>
-            </Field>
+          <div>
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <div className={classes.fieldSelectMethod}>
+                  <Field
+                    name="transfer_method"
+                    label="Hình thức thanh toán"
+                    component={renderSelectField}
+                    required
+                  >
+                    <option value="" disabled />
+                    <option value={1}>Người gửi trả phí</option>
+                    <option value={2}>Người nhận trả phí</option>
+                  </Field>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div className={classes.fieldSelectType}>
+                  <Field
+                    name="transaction_type"
+                    label="Hình thức chuyển khoản"
+                    component={renderSelectField}
+                    required
+                    disabled={fromContact}
+                  >
+                    <option value="" disabled />
+                    <option value={1}>Nội bộ</option>
+                    <option value={2}>Liên ngân hàng</option>
+                  </Field>
+                </div>
+              </Grid>
+            </Grid>
           </div>
           <div className={classes.field}>
             <Field
@@ -115,14 +148,17 @@ let CreateContact = ({ classes, handleSubmit, transfer }) => {
   );
 };
 
-CreateContact = reduxForm({
-  form: 'createContact',
-})(CreateContact);
+FormCharge = reduxForm({
+  form: 'formCharge',
+})(FormCharge);
 
-CreateContact.propTypes = {
+FormCharge.propTypes = {
   classes: PropTypes.instanceOf(Object),
   transfer: PropTypes.instanceOf(Object),
+  history: PropTypes.instanceOf(Object),
   handleSubmit: PropTypes.func,
+  isDebit: PropTypes.bool,
+  fromContact: PropTypes.bool,
 };
 
-export default compose(withStyles(styles))(CreateContact);
+export default withRouter(compose(withStyles(styles))(FormCharge));

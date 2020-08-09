@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import HeadList from './HeadTable';
 import DebitItem from './DebitItem';
-import { getListDebit } from '../../../Actions';
+import { getListDebit, verifyPayDebitOTP } from '../../../Actions';
 import DebitList from '../../../Components/Dashboard/TableBody';
 
 const styles = {
@@ -48,11 +48,24 @@ const styles = {
   },
 };
 
-const Debit = ({ classes, getDebit, debit }) => {
+const Debit = ({
+  classes,
+  getDebit,
+  debit,
+  payDebit,
+  isPayDebit,
+  handleCloseOTPForm,
+  verify,
+}) => {
   const [page, setPage] = useState(1);
 
   const handleChangePage = (event, value) => {
     setPage(value);
+  };
+
+  const handleSubmitOTP = ({ OTP }) => {
+    verify(OTP);
+    handleCloseOTPForm();
   };
 
   useEffect(() => {
@@ -80,7 +93,15 @@ const Debit = ({ classes, getDebit, debit }) => {
           <DebitList>
             {Array.isArray(items) &&
               items.map((elem, index) => (
-                <DebitItem key={elem.id} index={index + 1} debit={elem} />
+                <DebitItem
+                  key={elem.id}
+                  index={index + 1}
+                  payDebit={payDebit}
+                  debit={elem}
+                  isPayDebit={isPayDebit}
+                  handleCloseOTPForm={handleCloseOTPForm}
+                  handleSubmitOTP={handleSubmitOTP}
+                />
               ))}
           </DebitList>
         </Table>
@@ -106,6 +127,9 @@ const mapDispatchToProps = (dispatch) => {
     getDebit: (page) => {
       dispatch(getListDebit(page));
     },
+    verify: (OTP) => {
+      dispatch(verifyPayDebitOTP(OTP));
+    },
   };
 };
 
@@ -113,6 +137,10 @@ Debit.propTypes = {
   classes: PropTypes.instanceOf(Object),
   getDebit: PropTypes.func,
   debit: PropTypes.instanceOf(Object),
+  payDebit: PropTypes.func,
+  isPayDebit: PropTypes.bool,
+  handleCloseOTPForm: PropTypes.func,
+  verify: PropTypes.func,
 };
 
 export default compose(

@@ -17,6 +17,7 @@ const HeadTable = ({ classes }) => {
     { id: 4, name: 'Người bị nhắc nợ' },
     { id: 5, name: 'Số tiền' },
     { id: 6, name: 'Lời nhắn' },
+    { id: 7, name: 'Thao tác' },
   ];
   return (
     <TableHead>
