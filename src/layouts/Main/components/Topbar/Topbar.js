@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import { socket } from '../../../../socket';
+import { DialogNoti } from '../../../../Components/Notification';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Topbar = (props) => {
   const [notifications, setNoti] = useState([]);
+  const [openNoti, setOpenNoti] = useState(false);
 
+  const noti = localStorage.getItem('notifications')
+    ? JSON.parse(localStorage.getItem('notifications'))
+    : [];
   const { className, onSidebarOpen, ...rest } = props;
 
   const classes = useStyles();
@@ -39,9 +44,14 @@ const Topbar = (props) => {
 
   useEffect(() => {
     socket.on('debitNoti', (res) => {
+      const message = { msg: res, type: 'createDebit' };
       const tempArr = [];
-      tempArr.push(res);
-      setNoti(tempArr);
+      tempArr.push(message);
+      localStorage.setItem(
+        'notifications',
+        JSON.stringify(noti.concat(tempArr)),
+      );
+      setNoti(noti.concat(tempArr));
     });
   }, []);
 
@@ -57,8 +67,8 @@ const Topbar = (props) => {
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge badgeContent={notifications.length} color="error">
+          <IconButton color="inherit" onClick={() => setOpenNoti(true)}>
+            <Badge badgeContent={noti.length} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -76,6 +86,11 @@ const Topbar = (props) => {
           </IconButton>
         </Hidden>
       </Toolbar>
+      <DialogNoti
+        open={openNoti}
+        onClose={() => setOpenNoti(false)}
+        notifications={noti}
+      />
     </AppBar>
   );
 };
