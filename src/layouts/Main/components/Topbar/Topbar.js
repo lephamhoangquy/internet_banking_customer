@@ -55,6 +55,32 @@ const Topbar = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    socket.on('payDebitNoti', (res) => {
+      const message = { msg: res, type: 'payDebit' };
+      const tempArr = [];
+      tempArr.push(message);
+      localStorage.setItem(
+        'notifications',
+        JSON.stringify(noti.concat(tempArr)),
+      );
+      setNoti(noti.concat(tempArr));
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on('deletDebitNoti', (res) => {
+      const message = { msg: res, type: 'deletDebit' };
+      const tempArr = [];
+      tempArr.push(message);
+      localStorage.setItem(
+        'notifications',
+        JSON.stringify(noti.concat(tempArr)),
+      );
+      setNoti(noti.concat(tempArr));
+    });
+  }, []);
+
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>

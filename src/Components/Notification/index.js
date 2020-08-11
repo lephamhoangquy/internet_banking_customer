@@ -52,23 +52,13 @@ export function DialogNoti(props) {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText style={{ marginRight: 4 }} primary={noti.msg} />
-              {noti.type === 'createDebit' ? (
-                <Link
-                  onClick={handleClose}
-                  style={{ marginBottom: 2 }}
-                  to="/debit"
-                >
-                  Xem ngay
-                </Link>
-              ) : (
-                <Link
-                  onClick={handleClose}
-                  style={{ marginBottom: 2 }}
-                  to="/candidate-list"
-                >
-                  Xem ngay
-                </Link>
-              )}
+              <Link
+                onClick={handleClose}
+                style={{ marginBottom: 2 }}
+                to="/debit"
+              >
+                Xem ngay
+              </Link>
             </ListItem>
           ))}
         </List>
