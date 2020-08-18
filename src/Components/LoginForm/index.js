@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import { Captcha } from '../CustomField/Recaptcha';
 // import ReCAPTCHA from 'react-google-recaptcha';
 import TextField from '../CustomField/TextField';
 import CopyRight from '../CopyRight';
@@ -95,6 +96,7 @@ let LoginForm = (props) => {
               />
             </Grid>
           </Grid>
+          <Field name="captcharesponse" component={Captcha} />
           <div className={classes.forgetPass}>
             <Link to="/forgot-password">
               <span>Quên mật khẩu?</span>
