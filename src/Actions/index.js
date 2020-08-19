@@ -436,6 +436,37 @@ export const resetStateTransfer = () => ({
   type: constant.RESET_TRANSFER,
 });
 
+// transfer PARTNER
+
+export const verifyAccountTransferPartner = (
+  receiver_account_number,
+  partner_code,
+) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(
+        service.verifyAccountTransferPartner(
+          receiver_account_number,
+          partner_code,
+        ),
+      );
+      if (res.status === 200) {
+        dispatch(success(res.data.data[0]));
+      }
+    } catch (error) {
+      alert('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
+      throw error;
+    }
+  };
+  function success(data) {
+    return {
+      type: constant.FIND_CUSTOMER,
+      payload: data,
+      transaction_type: 1,
+    };
+  }
+};
+
 export const transferPartner = (
   sender_account_number,
   receiver_account_number,
@@ -456,10 +487,56 @@ export const transferPartner = (
           transaction_type,
         ),
       );
-      console.log('res', res);
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Vui lòng kiểm tra email và xác thực mã OTP');
+      }
     } catch (error) {
       alert('Có lỗi xảy ra, vui lòng kiểm tra lại.');
       throw error;
     }
   };
+  function success() {
+    return {
+      type: constant.TRANSFER_INTERNAL,
+    };
+  }
+};
+
+export const verifyTransferPartnerOTP = (
+  OTP,
+  sender_account_number,
+  receiver_account_number,
+  amount,
+  message,
+  transfer_method,
+  transaction_type,
+) => {
+  return async (dispatch) => {
+    try {
+      const res = await trackPromise(
+        service.verifyTransferPartnerOTP(
+          OTP,
+          sender_account_number,
+          receiver_account_number,
+          amount,
+          message,
+          transfer_method,
+          transaction_type,
+        ),
+      );
+      if (res.status === 200) {
+        dispatch(success());
+        alert('Chuyển tiền thành công');
+      }
+    } catch (error) {
+      alert('OTP không chính xác. Vui lòng kiểm tra lại. ');
+      throw error;
+    }
+  };
+  function success() {
+    return {
+      type: constant.VERIFY_TRANSFER_OTP,
+    };
+  }
 };

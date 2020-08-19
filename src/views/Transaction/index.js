@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
-import Search from '../Debit/CreateDebit/formSearch';
+import Search from './components/formSearch';
 import InfoCustomer from './components/infoCustomer';
-import { findCustomer } from '../../Actions';
+import { findCustomer, verifyAccountTransferPartner } from '../../Actions';
 
 const styles = {
   title: {
@@ -21,10 +21,24 @@ const styles = {
   },
 };
 
-const Charge = ({ findCustomerTrans, customer, classes }) => {
+const Charge = ({
+  findCustomerTrans,
+  findCustomerPartner,
+  customer,
+  classes,
+}) => {
   const onSearch = (values) => {
-    const { account_number } = values;
-    findCustomerTrans(account_number);
+    const { account_number, internal, partner } = values;
+    localStorage.setItem('receiver_account_number', account_number);
+    if (internal && partner) {
+      alert('Vui lòng chọn 1 trong 2 lựa chọn. ');
+    } else if (internal) {
+      findCustomerTrans(account_number);
+    } else if (partner) {
+      findCustomerPartner(account_number, 'SANGLE');
+    } else {
+      alert('Vui lòng chọn phương thức giao dịch');
+    }
   };
 
   return (
@@ -48,6 +62,9 @@ const mapDispatchToProps = (dispatch) => {
     findCustomerTrans: (accNumber) => {
       dispatch(findCustomer(accNumber));
     },
+    findCustomerPartner: (accNumber, partnerCode) => {
+      dispatch(verifyAccountTransferPartner(accNumber, partnerCode));
+    },
     // chargeMoney: (accNumber, amount) => {
     //   dispatch(chargeMoneyByAccNumber(accNumber, amount));
     // },
@@ -56,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
 
 Charge.propTypes = {
   findCustomerTrans: PropTypes.func,
+  findCustomerPartner: PropTypes.func,
   customer: PropTypes.instanceOf(Object),
   // chargeMoney: PropTypes.func,
   classes: PropTypes.instanceOf(Object),

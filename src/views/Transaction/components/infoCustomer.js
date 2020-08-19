@@ -46,39 +46,50 @@ const styles = {
 };
 
 const InfoCustomer = ({ customer, classes }) => {
-  const { account_number } = customer;
+  const { account_number, transaction_type } = customer;
+  const accountNumber =
+    account_number || localStorage.getItem('receiver_account_number');
   return (
     <Container>
       <Paper className={classes.content}>
         <h3 className={classes.title}>Thông tin tài khoản</h3>
         <div className={classes.info}>
-          <div className={classes.row}>
-            <div className={classes.label}>Họ và tên: </div>
-            <div className={classes.value}>{customer.username}</div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.label}>Email: </div>
-            <div className={classes.value}>{customer.email}</div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.label}>SĐT: </div>
-            <div className={classes.value}>{customer.phone}</div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.label}>Địa chỉ: </div>
-            <div className={classes.value}>{customer.address}</div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.label}>STK: </div>
-            <div className={classes.value}>{account_number}</div>
-          </div>
+          {transaction_type === 1 ? (
+            <div className={classes.row}>
+              <div className={classes.label}>Họ và tên: </div>
+              <div className={classes.value}>{customer.data.full_name}</div>
+            </div>
+          ) : (
+            <>
+              <div className={classes.row}>
+                <div className={classes.label}>Họ và tên: </div>
+                <div className={classes.value}>{customer.username}</div>
+              </div>
+              <div className={classes.row}>
+                <div className={classes.label}>Email: </div>
+                <div className={classes.value}>{customer.email}</div>
+              </div>
+              <div className={classes.row}>
+                <div className={classes.label}>SĐT: </div>
+                <div className={classes.value}>{customer.phone}</div>
+              </div>
+              <div className={classes.row}>
+                <div className={classes.label}>Địa chỉ: </div>
+                <div className={classes.value}>{customer.address}</div>
+              </div>
+              <div className={classes.row}>
+                <div className={classes.label}>STK: </div>
+                <div className={classes.value}>{account_number}</div>
+              </div>
+            </>
+          )}
         </div>
         <div className={classes.btnCharge}>
           <Link
             to={{
               pathname: '/transaction/charge',
               aboutProps: {
-                account_number,
+                account_number: accountNumber,
               },
             }}
           >

@@ -110,21 +110,6 @@ let FormCharge = ({
                   </Field>
                 </div>
               </Grid>
-              <Grid item xs={6}>
-                <div className={classes.fieldSelectType}>
-                  <Field
-                    name="transaction_type"
-                    label="Hình thức chuyển khoản"
-                    component={renderSelectField}
-                    required
-                    disabled={fromContact}
-                  >
-                    <option value="" disabled />
-                    <option value={1}>Nội bộ</option>
-                    <option value={2}>Liên ngân hàng</option>
-                  </Field>
-                </div>
-              </Grid>
             </Grid>
           </div>
           <div className={classes.field}>

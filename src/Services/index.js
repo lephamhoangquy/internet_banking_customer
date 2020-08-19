@@ -125,6 +125,8 @@ export const verifyAccountTransferInternal = (receiver_account_number) =>
     receiver_account_number,
   });
 
+// PARTNER
+
 export const verifyAccountTransferPartner = (
   receiver_account_number,
   partner_code,
@@ -143,16 +145,33 @@ export const transferPartner = (
   transaction_type,
 ) =>
   callApi(urlApi, `transfer/partner`, 'POST', authHeader(), {
-    sender_account_number,
-    receiver_account_number,
-    amount,
-    message,
-    transfer_method,
-    transaction_type,
+    transactionData: {
+      sender_account_number,
+      receiver_account_number,
+      amount,
+      message,
+      transfer_method,
+      transaction_type,
+    },
   });
 
-export const verifyTransferPartnerOTP = (OTP, transactionData) =>
+export const verifyTransferPartnerOTP = (
+  OTP,
+  sender_account_number,
+  receiver_account_number,
+  amount,
+  message,
+  transfer_method,
+  transaction_type,
+) =>
   callApi(urlApi, 'transfer/partner/verify/code', 'POST', authHeader(), {
     OTP,
-    transactionData,
+    transactionData: {
+      sender_account_number,
+      receiver_account_number,
+      amount,
+      message,
+      transfer_method,
+      transaction_type,
+    },
   });

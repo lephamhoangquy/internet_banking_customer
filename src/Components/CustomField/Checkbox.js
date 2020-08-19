@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -19,9 +20,9 @@ const renderCheckbox = ({ input, label, color }) => (
 );
 
 renderCheckbox.propTypes = {
-  input: PropTypes.instanceOf(Object).isRequired,
-  label: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  input: PropTypes.instanceOf(Object),
+  label: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default renderCheckbox;
