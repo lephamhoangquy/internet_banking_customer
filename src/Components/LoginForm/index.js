@@ -17,8 +17,7 @@ import PropTypes from 'prop-types';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Captcha } from '../CustomField/Recaptcha';
-// import ReCAPTCHA from 'react-google-recaptcha';
+import Recaptcha from 'react-recaptcha';
 import TextField from '../CustomField/TextField';
 import CopyRight from '../CopyRight';
 
@@ -50,12 +49,18 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'underline',
     },
   },
+  captcha: {
+    marginTop: 10,
+  },
 }));
 
 let LoginForm = (props) => {
   const classes = useStyles();
-  const { handleSubmit, user } = props;
+  const { handleSubmit, user, setVerify } = props;
   const isLogin = _.get(user, 'isLogin', null);
+  const verifyRecaptcha = () => {
+    return setVerify(true);
+  };
   return (
     <Container component="main" maxWidth="xs">
       {/* Check login failure => alert  */}
@@ -96,7 +101,14 @@ let LoginForm = (props) => {
               />
             </Grid>
           </Grid>
-          <Field name="captcharesponse" component={Captcha} />
+          <div className={classes.captcha}>
+            <Recaptcha
+              sitekey="6LfQ-sAZAAAAAHwunMSGx7E4NmX2THX1r_uzlgqn"
+              render="explicit"
+              verifyCallback={verifyRecaptcha}
+            />
+          </div>
+
           <div className={classes.forgetPass}>
             <Link to="/forgot-password">
               <span>Quên mật khẩu?</span>
@@ -111,10 +123,6 @@ let LoginForm = (props) => {
           >
             Đăng nhập
           </Button>
-          {/* <ReCAPTCHA
-            sitekey="6LePB6cZAAAAAK2Q7aRVXHqaz-zzPrkUrOLJ2JmQ"
-            onChange={onChange}
-          /> */}
         </form>
       </div>
       <Box mt={5}>
@@ -130,7 +138,7 @@ LoginForm = reduxForm({
 
 LoginForm.propTypes = {
   handleSubmit: PropTypes.func,
-  handleClickOpen: PropTypes.func,
+  setVerify: PropTypes.func,
   user: PropTypes.instanceOf(Object).isRequired,
 };
 
