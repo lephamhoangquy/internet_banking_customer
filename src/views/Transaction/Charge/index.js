@@ -22,7 +22,7 @@ const Charge = (props) => {
     transfer,
     transferState,
     verifyOTP,
-    transaction_type,
+    partnerCode,
     transferExternal,
     verifyOTPExternal,
   } = props;
@@ -31,7 +31,7 @@ const Charge = (props) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const { amount, message, transfer_method, OTP } = values;
     if (OTP) {
-      if (transaction_type === 1) {
+      if (partnerCode) {
         verifyOTPExternal(
           OTP,
           user.account_number,
@@ -44,7 +44,7 @@ const Charge = (props) => {
       } else {
         verifyOTP(OTP, user.email);
       }
-    } else if (transaction_type === 1) {
+    } else if (partnerCode) {
       transferExternal(
         user.account_number,
         account_number,
@@ -52,6 +52,7 @@ const Charge = (props) => {
         message,
         Number(transfer_method),
         2,
+        partnerCode,
       );
     } else {
       transfer(
@@ -78,7 +79,7 @@ const Charge = (props) => {
 const mapStateToProps = (state) => {
   return {
     transferState: state.transfer,
-    transaction_type: state.customer.transaction_type,
+    partnerCode: state.customer.partnerCode,
   };
 };
 
@@ -111,6 +112,7 @@ const mapDispatchToProps = (dispatch) => {
       message,
       transfer_method,
       transaction_type,
+      partner_code,
     ) => {
       dispatch(
         transferPartner(
@@ -120,6 +122,7 @@ const mapDispatchToProps = (dispatch) => {
           message,
           transfer_method,
           transaction_type,
+          partner_code,
         ),
       );
     },
@@ -154,7 +157,7 @@ Charge.propTypes = {
   transferExternal: PropTypes.func,
   verifyOTP: PropTypes.func,
   verifyOTPExternal: PropTypes.func,
-  transaction_type: PropTypes.number,
+  partnerCode: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Charge);

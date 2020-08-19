@@ -46,7 +46,7 @@ const styles = {
 };
 
 const InfoCustomer = ({ customer, classes }) => {
-  const { account_number, transaction_type } = customer;
+  const { account_number, partnerCode } = customer;
   const accountNumber =
     account_number || localStorage.getItem('receiver_account_number');
   return (
@@ -54,7 +54,7 @@ const InfoCustomer = ({ customer, classes }) => {
       <Paper className={classes.content}>
         <h3 className={classes.title}>Thông tin tài khoản</h3>
         <div className={classes.info}>
-          {transaction_type === 1 ? (
+          {partnerCode ? (
             <div className={classes.row}>
               <div className={classes.label}>Họ và tên: </div>
               <div className={classes.value}>{customer.data.full_name}</div>

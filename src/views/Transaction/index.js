@@ -28,14 +28,16 @@ const Charge = ({
   classes,
 }) => {
   const onSearch = (values) => {
-    const { account_number, internal, partner } = values;
+    const { account_number, internal, partnerSL, partnerQN } = values;
     localStorage.setItem('receiver_account_number', account_number);
-    if (internal && partner) {
-      alert('Vui lòng chọn 1 trong 2 lựa chọn. ');
+    if (internal && partnerSL && partnerQN) {
+      alert('Vui lòng chọn 1 trong 3 lựa chọn. ');
     } else if (internal) {
       findCustomerTrans(account_number);
-    } else if (partner) {
+    } else if (partnerSL) {
       findCustomerPartner(account_number, 'SANGLE');
+    } else if (partnerQN) {
+      findCustomerPartner(account_number, 'QUANGNGUYEN');
     } else {
       alert('Vui lòng chọn phương thức giao dịch');
     }

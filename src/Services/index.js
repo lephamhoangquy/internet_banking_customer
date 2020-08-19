@@ -143,6 +143,7 @@ export const transferPartner = (
   message,
   transfer_method,
   transaction_type,
+  partner_code,
 ) =>
   callApi(urlApi, `transfer/partner`, 'POST', authHeader(), {
     transactionData: {
@@ -152,6 +153,7 @@ export const transferPartner = (
       message,
       transfer_method,
       transaction_type,
+      partner_code,
     },
   });
 

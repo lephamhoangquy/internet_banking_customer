@@ -4,10 +4,10 @@ import { FIND_CUSTOMER } from '../Constants';
 const customer = (state = {}, action) => {
   switch (action.type) {
     case FIND_CUSTOMER: {
-      if (action.transaction_type === 1) {
+      if (action.partnerCode) {
         state = {
           data: action.payload,
-          transaction_type: action.transaction_type,
+          partnerCode: action.partnerCode,
         };
       } else {
         state = action.payload;

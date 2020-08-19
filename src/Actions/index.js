@@ -451,18 +451,23 @@ export const verifyAccountTransferPartner = (
         ),
       );
       if (res.status === 200) {
-        dispatch(success(res.data.data[0]));
+        if (_.isArray(res.data.data)) {
+          dispatch(success(res.data.data[0], 'SANGLE'));
+          return;
+        }
+        dispatch(success(res.data.data, 'QUANGNGUYEN'));
+        return;
       }
     } catch (error) {
       alert('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
       throw error;
     }
   };
-  function success(data) {
+  function success(data, partnerCode) {
     return {
       type: constant.FIND_CUSTOMER,
       payload: data,
-      transaction_type: 1,
+      partnerCode,
     };
   }
 };
@@ -474,6 +479,7 @@ export const transferPartner = (
   message,
   transfer_method,
   transaction_type,
+  partner_code,
 ) => {
   return async (dispatch) => {
     try {
@@ -485,6 +491,7 @@ export const transferPartner = (
           message,
           transfer_method,
           transaction_type,
+          partner_code,
         ),
       );
       if (res.status === 200) {

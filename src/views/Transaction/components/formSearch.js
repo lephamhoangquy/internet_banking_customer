@@ -41,10 +41,16 @@ let searchForm = ({ handleSubmit, classes }) => {
               label="Nội bộ"
             />
             <Field
-              name="partner"
+              name="partnerSL"
               component={Checkbox}
               required
-              label="Liên ngân hàng"
+              label="Ngân hàng SL"
+            />
+            <Field
+              name="partnerQN"
+              component={Checkbox}
+              required
+              label="Ngân hàng QN"
             />
           </div>
           <div className={classes.field}>
